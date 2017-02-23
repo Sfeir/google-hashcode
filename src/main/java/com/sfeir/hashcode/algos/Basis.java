@@ -17,7 +17,7 @@ public class Basis {
     public static void run() {
         System.out.println(Cache.getCaches());
         int nbCache = Cache.getCaches().size();
-        for (Cache c : Cache.getCaches()) {
+        Cache.getCaches().parallelStream().forEach(c -> {
             System.out.println(c+"/"+nbCache);
             if (!c.getEndpoints().isEmpty()) {
                 List<Video> videosForEP = new ArrayList<>();
@@ -35,7 +35,7 @@ public class Basis {
                     }
                 }
             }
-        }
+        });
     }
 }
 
@@ -43,17 +43,19 @@ class ScorePerVideo implements  Comparable{
 
     private Integer score;
     private Video v;
+    private Float ratio;
 
     ScorePerVideo(int score, Video v) {
         this.score = score;
         this.v = v;
+        ratio = (float)score/(float)v.getSize();
     }
 
     @Override
     public int compareTo(Object o) {
         if(!(o instanceof ScorePerVideo))
             throw new IllegalArgumentException();
-        return ((ScorePerVideo) o).score.compareTo(this.score);
+        return ((ScorePerVideo) o).ratio.compareTo(this.ratio);
     }
 
     @Override
