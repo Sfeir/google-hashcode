@@ -17,7 +17,7 @@ public class Cache {
     private int id;
     private int size;
     private List<Video> videos = new ArrayList<>();
-    private List<Endpoint> endpoints = new ArrayList<>();
+    private List<Endpoint> endpoints = null;
     private List<Integer> endpointsIDs = new ArrayList<>();
 
     public Cache(int id, int size) {
@@ -63,6 +63,12 @@ public class Cache {
     }
 
     public List<Endpoint> getEndpoints() {
+        if(endpoints == null){
+            endpoints = new ArrayList<>();
+            for (Integer endpointsID : endpointsIDs) {
+                endpoints.add(Endpoint.getEndpoint(endpointsID));
+            }
+        }
         return endpoints;
     }
 
