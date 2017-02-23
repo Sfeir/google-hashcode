@@ -29,12 +29,17 @@ public class App
         Init init = new Init(lines.remove(0));
         VideoFactory videoFactory = new VideoFactory(lines.remove(0));
         List<Video> videos = videoFactory.getVideos();
-        List<Cache> caches = new ArrayList<>();
+        for (Video v: videos) {
+            Video.getVideos().put(v.getId(), v);
+        }
         for (int i = 0; i < init.numberOfCaches(); i++) {
-            caches.add(new Cache(i, init.cacheSize()));
+            Cache.getCaches().put(i, new Cache(i, init.cacheSize()));
         }
         EndpointFactory endpointFactory = new EndpointFactory(lines,init.numberOfEndpoints());
         List<Endpoint> endpoints = endpointFactory.createEndpoints();
+        for (Endpoint e: endpoints) {
+            Endpoint.getEndpoints().put(e.getId(), e);
+        }
         RequestFactory requestFactory = new RequestFactory(endpointFactory.getRemainsLines());
         // Write output
         Files.write(new File(args[1]).toPath(), lines);
