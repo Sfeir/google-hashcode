@@ -42,6 +42,17 @@ public class App
         }
         RequestFactory requestFactory = new RequestFactory(endpointFactory.getRemainsLines());
         // Write output
-        Files.write(new File(args[1]).toPath(), lines);
+
+        doYourJob();
+
+        List<String > res = new ArrayList<>();
+        for (Cache c: Cache.getCaches().values()) {
+            res.add(c.getOutput());
+        }
+        Files.write(new File(args[1]).toPath(), res);
+    }
+
+    private static void doYourJob() {
+
     }
 }
