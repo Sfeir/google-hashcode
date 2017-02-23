@@ -44,4 +44,17 @@ public class Cache {
         }
         return res;
     }
+
+    public String getOutput(){
+        String res = ""+id;
+        for (int videoId: videos) {
+            res+=" "+videoId;
+        }
+        return res;
+    }
+
+    @Override
+    public String toString() {
+        return "CACHE "+getOutput();
+    }
 }
