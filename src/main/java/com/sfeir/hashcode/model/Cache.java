@@ -34,11 +34,12 @@ public class Cache {
     }
 
     public void addVideo(int videoId){
-        videos.add(Video.getVideo(videoId));
+        addVideo(Video.getVideo(videoId));
     }
 
     public void addVideo(Video v){
         videos.add(v);
+        Endpoint.getEndpoints().stream().filter(endpoint -> endpoint.getCaches().get(this) != null).forEach(endpoint -> endpoint.getRequests().remove(v));
     }
 
     public int getRemainingSpace(){
