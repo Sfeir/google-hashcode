@@ -30,6 +30,9 @@ public class App
         List<String> inputs = Arrays.asList("me_at_the_zoo.in", "trending_today.in", "videos_worth_spreading.in");
 
         for (String inputName : inputs) {
+
+            System.out.println("PARSING FILE : " + inputName);
+
             // READ input
             Path inputPath = Paths.get(App.class.getResource("/" + inputName).toURI());
             List<String> lines = Files.readAllLines(inputPath, StandardCharsets.UTF_8);
