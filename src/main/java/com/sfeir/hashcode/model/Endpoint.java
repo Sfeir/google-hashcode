@@ -58,4 +58,8 @@ public class Endpoint {
         }
         throw new IllegalArgumentException("not existing endpoint id: " + endpoint);
     }
+
+    public Map<Video, Integer> getRequests() {
+        return requests;
+    }
 }

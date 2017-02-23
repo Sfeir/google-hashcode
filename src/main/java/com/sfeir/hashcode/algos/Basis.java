@@ -8,6 +8,7 @@ import com.sfeir.hashcode.model.Cache;
 public class Basis {
     public static void run() {
         for (Cache c: Cache.getCaches()) {
+            c.getEndpoints().get(0).getR
         }
     }
 }
