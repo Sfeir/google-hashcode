@@ -1,5 +1,7 @@
 package com.sfeir.hashcode.model;
 
+import com.sfeir.hashcode.algos.Scoring;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,5 +63,9 @@ public class Endpoint {
 
     public Map<Video, Integer> getRequests() {
         return requests;
+    }
+
+    Map<Cache,Integer> getScore(Video video){
+        return Scoring.getScore(video,this);
     }
 }
