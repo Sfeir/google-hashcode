@@ -32,6 +32,7 @@ public class EndpointFactory {
             while (y < Integer.valueOf(line.split(" ")[1])) {
                 String cacheDefinition = lines.remove(0);
                 endpoint.addCache(Integer.valueOf(cacheDefinition.split(" ")[0]),Integer.valueOf(cacheDefinition.split(" ")[1]));
+                y++;
             }
         }
         return endpoints;

@@ -41,7 +41,13 @@ public class App
             Endpoint.getEndpoints().put(e.getId(), e);
         }
         for (String line : endpointFactory.getRemainsLines()) {
-            Endpoint.getEndpoints().get(Integer.valueOf(line.split(" ")[1])).addRequest(Integer.valueOf(line.split(" ")[0]),Integer.valueOf(line.split(" ")[2]));
+            Endpoint.getEndpoints().get(
+                    Integer.valueOf(
+                            line.split(" ")[1])).
+                    addRequest(Integer.valueOf(
+                            line.split(" ")[0]),
+                            Integer.valueOf(
+                                    line.split(" ")[2]));
         }
         // Write output
 
