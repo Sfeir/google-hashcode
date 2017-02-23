@@ -36,6 +36,10 @@ public class Endpoint {
         requests.put(video, nb);
     }
 
+    public void addCache(int cache, int latence){
+        caches.put(cache, latence);
+    }
+
     public Map<Integer, Integer> getCaches() {
         return caches;
     }
