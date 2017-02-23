@@ -15,8 +15,10 @@ import java.util.TreeSet;
 public class Basis {
 
     public static void run() {
+        System.out.println(Cache.getCaches());
+        int nbCache = Cache.getCaches().size();
         for (Cache c : Cache.getCaches()) {
-            System.out.println(c);
+            System.out.println(c+"/"+nbCache);
             if (!c.getEndpoints().isEmpty()) {
                 List<Video> videosForEP = new ArrayList<>();
                 for (Endpoint endpoint : c.getEndpoints()) {
