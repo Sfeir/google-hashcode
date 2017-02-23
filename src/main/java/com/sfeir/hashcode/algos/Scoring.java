@@ -14,9 +14,9 @@ public class Scoring {
 
     public static Map<Cache,Integer> getScore(Video video, Endpoint endpoint){
         Map<Cache,Integer> scores = new HashMap<>();
-        int datacenterLatency = video.getSize() * endpoint.getDatacenterLatency();
+        int datacenterLatency = video.getSize() * endpoint.getDatacenterLatency() * endpoint.getRequests().get(video);
         for (Cache cache : endpoint.getCaches().keySet()) {
-            int cacheLatency = video.getSize() * endpoint.getCaches().get(cache);
+            int cacheLatency = video.getSize() * endpoint.getCaches().get(cache) * endpoint.getRequests().get(video);
             int score = datacenterLatency - cacheLatency;
             scores.put(cache,score);
         }
