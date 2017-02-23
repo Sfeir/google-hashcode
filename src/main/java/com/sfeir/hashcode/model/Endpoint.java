@@ -65,7 +65,7 @@ public class Endpoint {
         return requests;
     }
 
-    Map<Cache,Integer> getScore(Video video){
+    public Map<Cache,Integer> getScore(Video video){
         return Scoring.getScore(video,this);
     }
 }
