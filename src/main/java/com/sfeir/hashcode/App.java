@@ -23,6 +23,8 @@ import java.util.List;
 public class App 
 {
 
+    private static String FOLDER_OUTPUT = "/tmp";
+
     public static void main( String[] args ) throws URISyntaxException, IOException {
 
         List<String> inputs = Arrays.asList("me_at_the_zoo.in", "trending_today.in", "videos_worth_spreading.in");
@@ -73,7 +75,7 @@ public class App
                 res.add(c.getOutput());
                 System.out.println(c.getOutput());
             }
-            Files.write(new File(args[1]).toPath(), res);
+            Files.write(new File(FOLDER_OUTPUT, inputName).toPath(), res);
         }
     }
 
