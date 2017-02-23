@@ -1,5 +1,7 @@
 package com.sfeir.hashcode;
 
+import com.sfeir.hashcode.model.Video;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -24,6 +26,8 @@ public class App
         List<String> lines = Files.readAllLines(inputPath, StandardCharsets.UTF_8);
         System.out.println(lines);
         Init init = new Init(lines.remove(0));
+        VideoFactory videoFactory = new VideoFactory(lines.remove(0));
+        List<Video> videos = videoFactory.getVideos();
 
         // Write output
         Files.write(new File(args[1]).toPath(), lines);
