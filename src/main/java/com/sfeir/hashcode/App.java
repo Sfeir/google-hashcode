@@ -1,5 +1,6 @@
 package com.sfeir.hashcode;
 
+import com.sfeir.hashcode.algos.Basis;
 import com.sfeir.hashcode.model.Cache;
 import com.sfeir.hashcode.model.Endpoint;
 import com.sfeir.hashcode.model.Video;
@@ -72,6 +73,7 @@ public class App
     }
 
     private static void doYourJob() {
+        Basis.run();
 
     }
 }
