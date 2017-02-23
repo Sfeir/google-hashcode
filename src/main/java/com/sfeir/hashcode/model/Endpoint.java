@@ -8,6 +8,12 @@ import java.util.Map;
  */
 public class Endpoint {
 
+    private static final Map<Integer, Endpoint> endpoints = new HashMap<>();
+
+    public static Map<Integer, Endpoint> getEndpoints() {
+        return endpoints;
+    }
+
     private int id;
     private int datacenterLatency;
     private Map<Integer, Integer> caches = new HashMap<>();
