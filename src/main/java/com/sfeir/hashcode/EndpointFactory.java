@@ -37,4 +37,8 @@ public class EndpointFactory {
         return endpoints;
     }
 
+    List<String> getRemainsLines(){
+        return lines;
+    }
+
 }

@@ -34,7 +34,7 @@ public class App
         for (int i = 0; i < init.numberOfCaches(); i++) {
             caches.add(new Cache(i, init.cacheSize()));
         }
-        EndpointFactory endpointFactory = new EndpointFactory(lines);
+        EndpointFactory endpointFactory = new EndpointFactory(lines,init.numberOfEndpoints());
         List<Endpoint> endpoints = endpointFactory.createEndpoints();
         // Write output
         Files.write(new File(args[1]).toPath(), lines);
