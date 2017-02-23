@@ -1,6 +1,7 @@
 package com.sfeir.hashcode;
 
 import com.sfeir.hashcode.model.Cache;
+import com.sfeir.hashcode.model.Endpoint;
 import com.sfeir.hashcode.model.Video;
 
 import java.io.File;
@@ -33,7 +34,8 @@ public class App
         for (int i = 0; i < init.numberOfCaches(); i++) {
             caches.add(new Cache(i, init.cacheSize()));
         }
-
+        EndpointFactory endpointFactory = new EndpointFactory(lines);
+        List<Endpoint> endpoints = endpointFactory.createEndpoints();
         // Write output
         Files.write(new File(args[1]).toPath(), lines);
     }
