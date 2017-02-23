@@ -1,6 +1,8 @@
 package com.sfeir.hashcode.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,5 +44,15 @@ public class Endpoint {
 
     public Map<Integer, Integer> getCaches() {
         return caches;
+    }
+
+    public List<Integer> getAvailableCaches(int videoId){
+        List<Integer> res = new ArrayList<>();
+        int videoSize = Video.getVideos().get(videoId).getSize();
+        for (Integer id:caches.keySet()) {
+            if(videoSize < Cache.getCaches().get(id).getRemainingSpace())
+                res.add(id);
+        }
+        return res;
     }
 }

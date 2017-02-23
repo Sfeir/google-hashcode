@@ -16,16 +16,6 @@ public class Cache {
         return caches;
     }
 
-    public List<Cache> getAvailableCaches(int videoId){
-        List<Cache> res = new ArrayList<>();
-        int videoSize = Video.getVideos().get(videoId).getSize();
-        for (Integer id:getCaches().keySet()) {
-            if(videoSize < getCaches().get(id).getRemainingSpace())
-                res.add(getCaches().get(id));
-        }
-        return res;
-    }
-
     private int id;
     private int size;
     private List<Integer> videos = new ArrayList<>();
