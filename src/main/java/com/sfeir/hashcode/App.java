@@ -1,5 +1,6 @@
 package com.sfeir.hashcode;
 
+import com.sfeir.hashcode.model.Cache;
 import com.sfeir.hashcode.model.Video;
 
 import java.io.File;
@@ -9,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +30,10 @@ public class App
         Init init = new Init(lines.remove(0));
         VideoFactory videoFactory = new VideoFactory(lines.remove(0));
         List<Video> videos = videoFactory.getVideos();
+        List<Cache> caches = new ArrayList<>();
+        for (int i = 0; i < init.numberOfCaches(); i++) {
+            caches.add(new Cache(i, init.cacheSize()));
+        }
 
         // Write output
         Files.write(new File(args[1]).toPath(), lines);
