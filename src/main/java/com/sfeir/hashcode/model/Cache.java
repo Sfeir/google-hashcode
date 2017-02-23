@@ -87,11 +87,6 @@ public class Cache {
         int res =0;
         for (Endpoint e : getEndpoints()) {
             if(e.getRequests().containsKey(v)){
-                System.out.println("ENDPOINT "+e);
-                System.out.println("LATENCY "+e.getDatacenterLatency());
-                System.out.println("CACHES "+e.getCaches());
-                System.out.println("SEARCHED "+this);
-                System.out.println("CACHE "+e.getCaches().get(this));
                 int gain = (e.getDatacenterLatency()-e.getCaches().get(this));
                 res+=gain*e.getRequests().get(v);
             }
