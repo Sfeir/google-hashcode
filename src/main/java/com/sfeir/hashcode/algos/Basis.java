@@ -8,9 +8,6 @@ import com.sfeir.hashcode.model.Video;
  */
 public class Basis {
 
-
-
-
     public static void run() {
         for (Cache c: Cache.getCaches()) {
             if (!c.getEndpoints().isEmpty()) {
