@@ -1,4 +1,4 @@
-package com.sfeir.hashcode.model;
+package com.sfeir.hashcode;
 
 /**
  * Created by bcornu on 2/23/17.
