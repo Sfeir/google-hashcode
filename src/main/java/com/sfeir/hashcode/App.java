@@ -38,7 +38,7 @@ public class App
         List<Video> videos = videoFactory.getVideos();
         System.out.println("set videos");
         for (Video v: videos) {
-            Video.getVideos().put(v.getId(), v);
+            Video.getVideos().add(v);
         }
         System.out.println("read endpoints");
         EndpointFactory endpointFactory = new EndpointFactory(lines,init.numberOfEndpoints());

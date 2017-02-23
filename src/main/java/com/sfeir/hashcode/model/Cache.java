@@ -37,6 +37,10 @@ public class Cache {
         videos.add(Video.getVideo(videoId));
     }
 
+    public void addVideo(Video v){
+        videos.add(v);
+    }
+
     public int getRemainingSpace(){
         int res = size;
         for (Video video:videos) {

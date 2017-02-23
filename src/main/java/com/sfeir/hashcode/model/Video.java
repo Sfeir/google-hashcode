@@ -1,6 +1,8 @@
 package com.sfeir.hashcode.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -8,9 +10,9 @@ import java.util.Map;
  */
 public class Video {
 
-    private static final Map<Integer, Video> videos = new HashMap<>();
+    private static final List<Video> videos = new ArrayList<>();
 
-    public static Map<Integer, Video> getVideos() {
+    public static List<Video> getVideos() {
         return videos;
     }
 
@@ -31,6 +33,10 @@ public class Video {
     }
 
     public static Video getVideo(int videoId) {
-        return null;
+        for (Video v : videos) {
+            if (v.getId() == videoId)
+                return v;
+        }
+        throw new IllegalArgumentException("not existing endpoint id: " + videoId);
     }
 }
