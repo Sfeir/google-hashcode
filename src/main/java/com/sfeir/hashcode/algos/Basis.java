@@ -17,7 +17,7 @@ public class Basis {
     public static void run() {
         System.out.println(Cache.getCaches());
         int nbCache = Cache.getCaches().size();
-        Cache.getCaches().parallelStream().forEach(c -> {
+        Cache.getCaches().stream().forEach(c -> {
             System.out.println(c+"/"+nbCache);
             if (!c.getEndpoints().isEmpty()) {
                 List<Video> videosForEP = new ArrayList<>();
