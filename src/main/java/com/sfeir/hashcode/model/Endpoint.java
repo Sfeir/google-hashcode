@@ -40,6 +40,7 @@ public class Endpoint {
 
     public void addCache(int cache, int latence){
         caches.put(cache, latence);
+        Cache.getCaches().get(id).addEndpoint(this.getId(), latence);
     }
 
     public Map<Integer, Integer> getCaches() {

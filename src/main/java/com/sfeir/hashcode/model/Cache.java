@@ -19,6 +19,7 @@ public class Cache {
     private int id;
     private int size;
     private List<Integer> videos = new ArrayList<>();
+    private Map<Integer, Integer> endpoints = new HashMap<>();
 
     public Cache(int id, int size) {
         this.id = id;
@@ -56,5 +57,13 @@ public class Cache {
     @Override
     public String toString() {
         return "CACHE "+getOutput();
+    }
+
+    public void addEndpoint(int endpoint, int latence){
+        endpoints.put(endpoint, latence);
+    }
+
+    public Map<Integer, Integer> getEndpoints() {
+        return endpoints;
     }
 }
