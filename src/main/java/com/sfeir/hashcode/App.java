@@ -17,16 +17,14 @@ import java.util.List;
 public class App 
 {
 
-    private static String OUTPUT_FOLDER = "/tmp";
-
     public static void main( String[] args ) throws URISyntaxException, IOException {
         // READ input
-        String inputName = "test.txt";
+        String inputName = args[0];
         Path inputPath = Paths.get(App.class.getResource("/" + inputName).toURI());
         List<String> lines = Files.readAllLines(inputPath, StandardCharsets.UTF_8);
         System.out.println(lines);
 
         // Write output
-        Files.write(new File(OUTPUT_FOLDER, inputName + "-" + new Date().getTime()).toPath(), lines);
+        Files.write(new File(args[1]).toPath(), lines);
     }
 }
