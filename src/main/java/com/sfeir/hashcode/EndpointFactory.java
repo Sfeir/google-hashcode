@@ -34,6 +34,7 @@ public class EndpointFactory {
                 endpoint.addCache(Integer.valueOf(cacheDefinition.split(" ")[0]),Integer.valueOf(cacheDefinition.split(" ")[1]));
                 y++;
             }
+            endpoints.add(endpoint);
         }
         return endpoints;
     }

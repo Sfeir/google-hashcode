@@ -46,6 +46,7 @@ public class App
         for (Endpoint e: endpoints) {
             Endpoint.getEndpoints().put(e.getId(), e);
         }
+        System.out.println(endpoints);
         for (String line : endpointFactory.getRemainsLines()) {
             Endpoint.getEndpoints().get(
                     Integer.valueOf(
