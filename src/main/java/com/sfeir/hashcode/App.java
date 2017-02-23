@@ -63,6 +63,7 @@ public class App
 
         System.out.println("set output");
         List<String > res = new ArrayList<>();
+        res.add(""+Cache.getCaches().size());
         for (Cache c: Cache.getCaches().values()) {
             res.add(c.getOutput());
             System.out.println(c.getOutput());
