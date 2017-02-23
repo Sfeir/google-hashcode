@@ -26,7 +26,6 @@ public class App
         String inputName = args[0];
         Path inputPath = Paths.get(App.class.getResource("/" + inputName).toURI());
         List<String> lines = Files.readAllLines(inputPath, StandardCharsets.UTF_8);
-        System.out.println(lines);
         Init init = new Init(lines.remove(0));
         VideoFactory videoFactory = new VideoFactory(lines.remove(0));
         List<Video> videos = videoFactory.getVideos();
