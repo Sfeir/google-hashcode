@@ -31,6 +31,10 @@ public class App
 
         for (String inputName : inputs) {
 
+            Endpoint.getEndpoints().clear();
+            Cache.getCaches().clear();
+            Video.getVideos().clear();
+
             System.out.println("PARSING FILE : " + inputName);
 
             // READ input
