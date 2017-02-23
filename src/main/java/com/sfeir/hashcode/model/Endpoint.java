@@ -10,7 +10,8 @@ public class Endpoint {
 
     private int id;
     private int datacenterLatency;
-    private Map<Cache, Integer> caches = new HashMap<>();
+    private Map<Integer, Integer> caches = new HashMap<>();
+    private Map<Integer, Integer> requests = new HashMap<>();
 
     public Endpoint(int id, int datacenterLatency) {
         this.id = id;
@@ -25,7 +26,11 @@ public class Endpoint {
         return id;
     }
 
-    public Map<Cache, Integer> getCaches() {
+    public void addRequest(int video, int nb){
+        requests.put(video, nb);
+    }
+
+    public Map<Integer, Integer> getCaches() {
         return caches;
     }
 }
