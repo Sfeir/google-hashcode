@@ -10,16 +10,16 @@ import java.util.Map;
  */
 public class Endpoint {
 
-    private static final Map<Integer, Endpoint> endpoints = new HashMap<>();
+    private static final List<Endpoint> endpoints = new ArrayList<>();
 
-    public static Map<Integer, Endpoint> getEndpoints() {
+    public static List<Endpoint> getEndpoints() {
         return endpoints;
     }
 
     private int id;
     private int datacenterLatency;
-    private Map<Integer, Integer> caches = new HashMap<>();
-    private Map<Integer, Integer> requests = new HashMap<>();
+    private Map<Cache, Integer> caches = new HashMap<>();
+    private Map<Video, Integer> requests = new HashMap<>();
 
     public Endpoint(int id, int datacenterLatency) {
         this.id = id;
@@ -35,25 +35,27 @@ public class Endpoint {
     }
 
     public void addRequest(int video, int nb){
-        requests.put(video, nb);
+        requests.put(Video.getVideo(video), nb);
     }
 
     public void addCache(int cache, int latence){
-        caches.put(cache, latence);
+        caches.put(Cache.getCache(cache), latence);
         Cache.getCaches().get(id).addEndpoint(this.getId(), latence);
     }
 
-    public Map<Integer, Integer> getCaches() {
+    public Map<Cache, Integer> getCaches() {
         return caches;
     }
 
-    public List<Integer> getAvailableCaches(int videoId){
-        List<Integer> res = new ArrayList<>();
-        int videoSize = Video.getVideos().get(videoId).getSize();
-        for (Integer id:caches.keySet()) {
-            if(videoSize < Cache.getCaches().get(id).getRemainingSpace())
-                res.add(id);
+    public List<Cache> getAvailableCaches(int videoId) {
+        return null;
+    }
+
+    public static Endpoint getEndpoint(int endpoint) {
+        for (Endpoint e : endpoints) {
+            if (e.getId() == endpoint)
+                return e;
         }
-        return res;
+        throw new IllegalArgumentException("not existing endpoint id: " + endpoint);
     }
 }

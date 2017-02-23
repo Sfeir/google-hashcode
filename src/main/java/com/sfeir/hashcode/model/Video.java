@@ -29,4 +29,8 @@ public class Video {
     public int getId() {
         return id;
     }
+
+    public static Video getVideo(int videoId) {
+        return null;
+    }
 }

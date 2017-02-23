@@ -1,25 +1,24 @@
 package com.sfeir.hashcode.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by bcornu on 2/23/17.
  */
 public class Cache {
 
-    private static final Map<Integer, Cache> caches = new HashMap<>();
+    private static final List<Cache> caches = new ArrayList<>();
 
-    public static Map<Integer, Cache> getCaches() {
+    public static List<Cache> getCaches() {
         return caches;
     }
 
     private int id;
     private int size;
-    private List<Integer> videos = new ArrayList<>();
-    private Map<Integer, Integer> endpoints = new HashMap<>();
+    private List<Video> videos = new ArrayList<>();
+    private List<Endpoint> endpoints = new ArrayList<>();
+    private List<Integer> endpointsIDs = new ArrayList<>();
 
     public Cache(int id, int size) {
         this.id = id;
@@ -35,21 +34,21 @@ public class Cache {
     }
 
     public void addVideo(int videoId){
-        videos.add(videoId);
+        videos.add(Video.getVideo(videoId));
     }
 
     public int getRemainingSpace(){
         int res = size;
-        for (int videoId:videos) {
-            res-=Video.getVideos().get(videoId).getSize();
+        for (Video video:videos) {
+            res-=video.getSize();
         }
         return res;
     }
 
     public String getOutput(){
         String res = ""+id;
-        for (int videoId: videos) {
-            res+=" "+videoId;
+        for (Video video: videos) {
+            res+=" "+video.getId();
         }
         return res;
     }
@@ -60,10 +59,17 @@ public class Cache {
     }
 
     public void addEndpoint(int endpoint, int latence){
-        endpoints.put(endpoint, latence);
+        endpointsIDs.add(endpoint);
     }
 
-    public Map<Integer, Integer> getEndpoints() {
+    public List<Endpoint> getEndpoints() {
         return endpoints;
+    }
+
+    public static Cache getCache(int cache) {
+        for (Cache c : caches)
+            if (c.getId() == cache)
+                return c;
+        throw new IllegalArgumentException("not existing cache id: " + cache);
     }
 }

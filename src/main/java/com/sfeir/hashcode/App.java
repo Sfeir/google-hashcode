@@ -31,7 +31,7 @@ public class App
         Init init = new Init(lines.remove(0));
         System.out.println("set caches");
         for (int i = 0; i < init.numberOfCaches(); i++) {
-            Cache.getCaches().put(i, new Cache(i, init.cacheSize()));
+            Cache.getCaches().add(new Cache(i, init.cacheSize()));
         }
         VideoFactory videoFactory = new VideoFactory(lines.remove(0));
         System.out.println("read videos");
@@ -45,7 +45,7 @@ public class App
         List<Endpoint> endpoints = endpointFactory.createEndpoints();
         System.out.println("set endpoints");
         for (Endpoint e: endpoints) {
-            Endpoint.getEndpoints().put(e.getId(), e);
+            Endpoint.getEndpoints().add(e);
         }
         System.out.println(endpoints);
         for (String line : endpointFactory.getRemainsLines()) {
@@ -65,7 +65,7 @@ public class App
         System.out.println("set output");
         List<String > res = new ArrayList<>();
         res.add(""+Cache.getCaches().size());
-        for (Cache c: Cache.getCaches().values()) {
+        for (Cache c: Cache.getCaches()) {
             res.add(c.getOutput());
             System.out.println(c.getOutput());
         }
