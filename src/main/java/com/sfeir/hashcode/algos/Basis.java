@@ -15,7 +15,7 @@ import java.util.TreeSet;
 public class Basis {
 
     public static void run() {
-        for (Cache c : Cache.getCaches()) {
+        Cache.getCaches().parallelStream().forEach(c -> {
             System.out.println(c);
             if (!c.getEndpoints().isEmpty()) {
                 List<Video> videosForEP = new ArrayList<>();
@@ -33,7 +33,7 @@ public class Basis {
                     }
                 }
             }
-        }
+        });
     }
 }
 
