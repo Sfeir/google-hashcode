@@ -40,7 +40,9 @@ public class App
         for (Endpoint e: endpoints) {
             Endpoint.getEndpoints().put(e.getId(), e);
         }
-        RequestFactory requestFactory = new RequestFactory(endpointFactory.getRemainsLines());
+        for (String line : endpointFactory.getRemainsLines()) {
+            Endpoint.getEndpoints().get(Integer.valueOf(line.split(" ")[1])).addRequest(Integer.valueOf(line.split(" ")[0]),Integer.valueOf(line.split(" ")[2]));
+        }
         // Write output
 
         doYourJob();
