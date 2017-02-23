@@ -41,8 +41,9 @@ public class Endpoint {
     }
 
     public void addCache(int cache, int latence){
-        caches.put(Cache.getCache(cache), latence);
-        Cache.getCaches().get(id).addEndpoint(this.getId(), latence);
+        Cache c = Cache.getCache(cache);
+        caches.put(c, latence);
+        c.addEndpoint(this.getId(), latence);
     }
 
     public Map<Cache, Integer> getCaches() {
@@ -67,5 +68,10 @@ public class Endpoint {
 
     public Map<Cache,Integer> getScore(Video video){
         return Scoring.getScore(video,this);
+    }
+
+    @Override
+    public String toString() {
+        return getId()+"";
     }
 }

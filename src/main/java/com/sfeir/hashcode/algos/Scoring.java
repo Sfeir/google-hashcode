@@ -23,7 +23,7 @@ public class Scoring {
         return scores;
     }
 
-    public static int getScore(Cache c, Video v){
+    public static int getScorePerVideo(Cache c, Video v){
         int res =0;
         for (Endpoint e : c.getEndpoints()) {
             res += e.getScore(v).get(c);
