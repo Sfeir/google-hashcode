@@ -26,17 +26,23 @@ public class App
         String inputName = args[0];
         Path inputPath = Paths.get(App.class.getResource("/" + inputName).toURI());
         List<String> lines = Files.readAllLines(inputPath, StandardCharsets.UTF_8);
+        System.out.println("read Init");
         Init init = new Init(lines.remove(0));
-        VideoFactory videoFactory = new VideoFactory(lines.remove(0));
-        List<Video> videos = videoFactory.getVideos();
-        for (Video v: videos) {
-            Video.getVideos().put(v.getId(), v);
-        }
+        System.out.println("set caches");
         for (int i = 0; i < init.numberOfCaches(); i++) {
             Cache.getCaches().put(i, new Cache(i, init.cacheSize()));
         }
+        VideoFactory videoFactory = new VideoFactory(lines.remove(0));
+        System.out.println("read videos");
+        List<Video> videos = videoFactory.getVideos();
+        System.out.println("set videos");
+        for (Video v: videos) {
+            Video.getVideos().put(v.getId(), v);
+        }
+        System.out.println("read endpoints");
         EndpointFactory endpointFactory = new EndpointFactory(lines,init.numberOfEndpoints());
         List<Endpoint> endpoints = endpointFactory.createEndpoints();
+        System.out.println("set endpoints");
         for (Endpoint e: endpoints) {
             Endpoint.getEndpoints().put(e.getId(), e);
         }
@@ -51,11 +57,14 @@ public class App
         }
         // Write output
 
+        System.out.println("doYourJob");
         doYourJob();
 
+        System.out.println("set output");
         List<String > res = new ArrayList<>();
         for (Cache c: Cache.getCaches().values()) {
             res.add(c.getOutput());
+            System.out.println(c.getOutput());
         }
         Files.write(new File(args[1]).toPath(), res);
     }
