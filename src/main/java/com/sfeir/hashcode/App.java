@@ -27,7 +27,7 @@ public class App
 
     public static void main( String[] args ) throws URISyntaxException, IOException {
 
-        List<String> inputs = Arrays.asList("kittens.in", "me_at_the_zoo.in", "trending_today.in", "videos_worth_spreading.in");
+        List<String> inputs = Arrays.asList( "me_at_the_zoo.in", "trending_today.in", "videos_worth_spreading.in");
 
         for (String inputName : inputs) {
 
