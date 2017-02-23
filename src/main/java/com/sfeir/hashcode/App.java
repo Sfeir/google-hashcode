@@ -23,6 +23,7 @@ public class App
         Path inputPath = Paths.get(App.class.getResource("/" + inputName).toURI());
         List<String> lines = Files.readAllLines(inputPath, StandardCharsets.UTF_8);
         System.out.println(lines);
+        Init init = new Init(lines.remove(0));
 
         // Write output
         Files.write(new File(args[1]).toPath(), lines);
