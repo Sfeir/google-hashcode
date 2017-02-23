@@ -7,6 +7,10 @@ import com.sfeir.hashcode.model.Video;
  * Created by bcornu on 2/23/17.
  */
 public class Basis {
+
+
+
+
     public static void run() {
         for (Cache c: Cache.getCaches()) {
             if (!c.getEndpoints().isEmpty()) {

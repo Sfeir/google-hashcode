@@ -1,7 +1,7 @@
 package com.sfeir.hashcode;
 
 /**
- * Created by tonyproum on 23/02/17.
+ * Created by Sfeir-Lille on 23/02/17.
  */
 public class Init {
 
