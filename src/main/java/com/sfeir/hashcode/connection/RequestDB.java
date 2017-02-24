@@ -19,6 +19,14 @@ public class RequestDB {
     private String add = "UPDATE request SET nb = nb + ? WHERE endpoint_id = ? AND video_id = ?";
     private String select = "SELECT * FROM request WHERE endpoint_id = ? AND video_id = ?";
     private String suppression = "DROP TABLE IF EXISTS request";
+    private String creation_work = "CREATE TABLE request_work (" +
+            "endpoint_id int," +
+            "video_id int," +
+            "nb int," +
+            "CONSTRAINT request_work_pk PRIMARY KEY (endpoint_id, video_id)" +
+            ")";
+    private String fill_work = "INSERT INTO request_work (endpoint_id, video_id, nb) SELECT endpoint_id, video_id, nb FROM request";
+    private String suppression_work = "DROP TABLE IF EXISTS request_work";
     private Connector connector;
 
     public RequestDB(Connector connector) {
@@ -42,6 +50,15 @@ public class RequestDB {
         Connection connection = getConnection();
         Statement statement = connection.createStatement();
         statement.execute(creation);
+        connector.closeConnection();
+    }
+
+    public void initWorkTable() throws SQLException {
+        Connection connection = getConnection();
+        Statement statement = connection.createStatement();
+        statement.execute(suppression_work);
+        statement.execute(creation_work);
+        statement.execute(fill_work);
         connector.closeConnection();
     }
 

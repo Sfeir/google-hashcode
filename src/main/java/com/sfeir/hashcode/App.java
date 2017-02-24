@@ -10,9 +10,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.nio.file.Files;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Hello world!
@@ -39,6 +41,15 @@ public class App {
         RequestDB rdb = new RequestDB(connector);
         rdb.deleteTable();
         rdb.createTable();
+    }
+
+    private static void createWorkDB(Connector connector) throws Exception {
+        RequestDB rdb = new RequestDB(connector);
+        rdb.initWorkTable();
+
+        StockDB sdb = new StockDB(connector);
+        sdb.deleteTable();
+        sdb.createTable();
     }
 
     private static void fill_db(Connector connector, String inputName) throws Exception {
@@ -100,35 +111,45 @@ public class App {
     private static String FOLDER_OUTPUT = "/tmp";
 
     public static void main(String[] args) throws Exception {
-        boolean init =true;
+        boolean init =false;
 
-        List<String> inputs = Arrays.asList("me_at_the_zoo.in", "trending_today.in", "videos_worth_spreading.in", "kittens.in");
-        //List<String> inputs = Arrays.asList("me_at_the_zoo.in", "trending_today.in", "videos_worth_spreading.in");
+        //List<String> inputs = Arrays.asList("me_at_the_zoo.in");
+        List<String> inputs = Arrays.asList("me_at_the_zoo.in", "trending_today.in", "videos_worth_spreading.in");
 
         for (String inputName : inputs) {
-            Connector connector = new Connector("jdbc:postgresql://localhost:5432/hashcode2_"+inputName.split("\\.")[0], "hashcode", "password");
+            System.out.println(inputName);
+            Connector connector = new Connector("jdbc:postgresql://localhost:5432/hashcode_"+inputName.split("\\.")[0], "hashcode", "password");
 
             if (init) {
                 clean_db(connector);
                 fill_db(connector, inputName);
                 continue;
             }
+            createWorkDB(connector);
 
-            System.out.println("doYourJob");
             doYourJob(connector);
 
-            System.out.println("set output");
-            List<String> res = new ArrayList<>();
-            res.add("" + Cache.getCaches().size());
-            for (Cache c : Cache.getCaches()) {
-                res.add(c.getOutput());
-                System.out.println(c.getOutput());
+            Requestor r = new Requestor(connector);
+            Map<Integer, List<Integer>> cached = r.getStock();
+            String[] res = new String[cached.keySet().size()+1];
+            res[0] = ""+cached.keySet().size();
+            int i = 0;
+            for (Integer c : cached.keySet()) {
+                res[++i] = c+"";
+                for (Integer v : cached.get(c)) {
+                    res[i] += " "+v;
+                }
             }
-            Files.write(new File(FOLDER_OUTPUT, inputName).toPath(), res);
+//            System.out.println("set output");
+//            for (Cache c : Cache.getCaches()) {
+//                res.add(c.getOutput());
+//                System.out.println(c.getOutput());
+//            }
+            Files.write(new File(FOLDER_OUTPUT, inputName).toPath(), Arrays.asList(res));
         }
     }
 
-    private static void doYourJob(Connector connector) {
+    private static void doYourJob(Connector connector) throws SQLException {
         Basis.run(connector);
     }
 }
