@@ -1,5 +1,6 @@
 package com.sfeir.hashcode.algos;
 
+import com.sfeir.hashcode.connection.*;
 import com.sfeir.hashcode.model.Cache;
 import com.sfeir.hashcode.model.Endpoint;
 import com.sfeir.hashcode.model.Video;
@@ -14,10 +15,16 @@ import java.util.TreeSet;
  */
 public class Basis {
 
-    public static void run() {
-        System.out.println(Cache.getCaches());
+    public static void run(Connector connector) {
+
+        CacheDB cdb = new CacheDB(connector);
+        VideoDB vdb = new VideoDB(connector);
+        EndpointDB edb = new EndpointDB(connector);
+        LatenceDB ldb = new LatenceDB(connector);
+        RequestDB rdb = new RequestDB(connector);
+
         int nbCache = Cache.getCaches().size();
-        Cache.getCaches().stream().forEach(c -> {
+        for (Cache c: Cache.getCaches()) {
             System.out.println(c+"/"+nbCache);
             if (!c.getEndpoints().isEmpty()) {
                 List<Video> videosForEP = new ArrayList<>();
@@ -35,7 +42,7 @@ public class Basis {
                     }
                 }
             }
-        });
+        }
     }
 }
 

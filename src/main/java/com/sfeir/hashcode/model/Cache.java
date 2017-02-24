@@ -1,5 +1,7 @@
 package com.sfeir.hashcode.model;
 
+import com.sfeir.hashcode.connection.Connector;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import java.util.List;
  * Created by bcornu on 2/23/17.
  */
 public class Cache {
+
 
     private static final List<Cache> caches = new ArrayList<>();
 
@@ -39,7 +42,7 @@ public class Cache {
 
     public void addVideo(Video v){
         videos.add(v);
-        Endpoint.getEndpoints().stream().filter(endpoint -> endpoint.getCaches().get(this) != null).forEach(endpoint -> endpoint.getRequests().remove(v));
+        Endpoint.getEndpoints().parallelStream().filter(endpoint -> endpoint.getCaches().get(this) != null).forEach(endpoint -> endpoint.getRequests().remove(v));
     }
 
     public int getRemainingSpace(){
