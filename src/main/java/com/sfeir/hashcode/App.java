@@ -6,11 +6,10 @@ import com.sfeir.hashcode.model.Cache;
 import com.sfeir.hashcode.model.Endpoint;
 import com.sfeir.hashcode.model.Video;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.nio.charset.StandardCharsets;
+import java.io.FileReader;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,52 +55,46 @@ public class App {
         System.out.println("PARSING FILE : " + inputName);
 
         // READ input
-        Path inputPath = Paths.get(App.class.getResource("/" + inputName).toURI());
-        List<String> lines = Files.readAllLines(inputPath, StandardCharsets.UTF_8);
-        System.out.println("read Init");
-        Init init = new Init(lines.remove(0));
-        System.out.println("set caches");
-        for (int i = 0; i < init.numberOfCaches(); i++) {
-            System.out.println(i+"/"+init.numberOfCaches());
-            Cache c = new Cache(i, init.cacheSize());
-            Cache.getCaches().add(c);
-            cdb.insert(c);
-        }
-        VideoFactory videoFactory = new VideoFactory(lines.remove(0));
-        System.out.println("read videos");
-        List<Video> videos = videoFactory.getVideos();
-        System.out.println("set videos");
-        int i =0;
-        for (Video v : videos) {
-            System.out.println(i+++"/"+videos.size());
-            Video.getVideos().add(v);
-            vdb.insert(v);
-        }
-        System.out.println("read endpoints");
-        EndpointFactory endpointFactory = new EndpointFactory(lines, init.numberOfEndpoints());
-        List<Endpoint> endpoints = endpointFactory.createEndpoints();
-        System.out.println("set endpoints");
-        i=0;
-        for (Endpoint e : endpoints) {
-            System.out.println(i+++"/"+endpoints.size());
-            Endpoint.getEndpoints().add(e);
-            edb.insert(e);
-            for (Cache c : e.getCaches().keySet()) {
-                ldb.insert(e.getId(), c.getId(), e.getCaches().get(c));
+        try (BufferedReader br = new BufferedReader(new FileReader(new File(App.class.getResource("/" + inputName).toURI())))) {
+            String line;
+            // process the line.
+            System.out.println("read Init");
+            Init init = new Init(br.readLine());
+            System.out.println("set caches");
+            for (int i = 0; i < init.numberOfCaches(); i++) {
+                cdb.insert(new Cache(i, init.cacheSize()));
+                System.out.print("\r"+(i+1)+"/"+init.numberOfCaches());
             }
-
+            int i=0;
+            String[] videos = br.readLine().split(" ");
+            System.out.println("\nset videos");
+            for (String s : videos) {
+                vdb.insert(new Video(i++,Integer.valueOf(s)));
+                System.out.print("\r"+i+"/"+videos.length);
+            }
+            System.out.println("\nset endpoints");
+            for (int j = 0; j < init.numberOfEndpoints(); j++) {
+                String[] s = br.readLine().split(" ");
+                Endpoint e = new Endpoint(j, Integer.parseInt(s[0]));
+                edb.insert(e);
+                for (int k = 0; k < Integer.parseInt(s[1]); k++) {
+                    String[] s2 = br.readLine().split(" ");
+                    ldb.insert(e.getId(), Integer.parseInt(s2[0]), Integer.parseInt(s2[1]));
+                }
+                System.out.print("\r"+(j+1)+"/"+init.numberOfEndpoints());
+            }
+            i=0;
+            System.out.println("\nread/set requests");
+            while ((line = br.readLine()) != null) {
+                String[] s = line.split(" ");
+                int videoId = Integer.valueOf(s[0]);
+                int endpointId = Integer.valueOf(s[1]);
+                int nb = Integer.valueOf(s[2]);
+                rdb.addRequest(endpointId, videoId, nb);
+                System.out.print("\r"+ ++i+"/"+init.numberOfRequestDescription());
+            }
+            System.out.println("\nDONE");
         }
-        System.out.println("read/set requests");
-        for (String line : endpointFactory.getRemainsLines()) {
-            System.out.println(i+++"/"+endpointFactory.getRemainsLines().size());
-            String[] tmp = line.split(" ");
-            int videoId = Integer.valueOf(tmp[0]);
-            int endpointId = Integer.valueOf(tmp[1]);
-            int nb = Integer.valueOf(tmp[2]);
-            Endpoint.getEndpoints().get(endpointId).addRequest(videoId, nb);
-            rdb.addRequest(endpointId, videoId, nb);
-        }
-
     }
 
     private static String FOLDER_OUTPUT = "/tmp";
@@ -113,7 +106,7 @@ public class App {
         //List<String> inputs = Arrays.asList("me_at_the_zoo.in", "trending_today.in", "videos_worth_spreading.in");
 
         for (String inputName : inputs) {
-            Connector connector = new Connector("jdbc:postgresql://localhost:5432/hashcode_"+inputName.split("\\.")[0], "hashcode", "password");
+            Connector connector = new Connector("jdbc:postgresql://localhost:5432/hashcode2_"+inputName.split("\\.")[0], "hashcode", "password");
 
             if (init) {
                 clean_db(connector);

@@ -52,6 +52,5 @@ public class EndpointDB {
         preparedStatement.setInt(1, e.getId());
         preparedStatement.setInt(2, e.getDatacenterLatency());
         preparedStatement.executeUpdate();
-        connector.closeConnection();
     }
 }

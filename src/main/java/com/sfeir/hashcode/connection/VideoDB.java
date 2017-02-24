@@ -53,6 +53,5 @@ public class VideoDB {
         preparedStatement.setInt(1, v.getId());
         preparedStatement.setInt(2, v.getSize());
         preparedStatement.executeUpdate();
-        connector.closeConnection();
     }
 }

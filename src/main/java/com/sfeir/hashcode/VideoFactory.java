@@ -16,13 +16,5 @@ public class VideoFactory {
         this.init = init;
     }
 
-    public List<Video> getVideos() {
-        List<Video> videos = new ArrayList<>();
-        int i=0;
-        for (String video : init.split(" ")) {
-            videos.add(new Video(i++,Integer.valueOf(video)));
-        }
-        return videos;
-    }
 
 }
