@@ -80,4 +80,15 @@ public class Requestor {
         }
         return res;
     }
+
+    public int getNbRemaining() throws SQLException{
+        String request = "SELECT COUNT(0) as \"remain\" FROM request_work;";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(request);
+        ResultSet rs = preparedStatement.executeQuery();
+        if(rs.next()){
+            return rs.getInt("remain");
+        }
+        return -1;
+    }
 }

@@ -113,8 +113,8 @@ public class App {
     public static void main(String[] args) throws Exception {
         boolean init =false;
 
-        //List<String> inputs = Arrays.asList("me_at_the_zoo.in");
-        List<String> inputs = Arrays.asList("me_at_the_zoo.in", "trending_today.in", "videos_worth_spreading.in");
+        List<String> inputs = Arrays.asList("videos_worth_spreading.in");
+        //List<String> inputs = Arrays.asList("me_at_the_zoo.in", "trending_today.in", "videos_worth_spreading.in");
 
         for (String inputName : inputs) {
             System.out.println(inputName);
@@ -125,7 +125,7 @@ public class App {
                 fill_db(connector, inputName);
                 continue;
             }
-            createWorkDB(connector);
+            //createWorkDB(connector);
 
             doYourJob(connector);
 
