@@ -49,6 +49,38 @@ public class Requestor {
         return null;
     }
 
+    public List<int[]> getNextsBests() throws SQLException {
+        String request = "SELECT \"cid\", \"vid\" FROM " +
+                "(" +
+                "SELECT c.id as \"cid\", r.video_id as \"vid\", sum((e.default_latency - l.latency)*r.nb/v.size)  as \"gain\"" +
+                " FROM cache c " +
+                " INNER JOIN latence l ON c.id = l.cache_id " +
+                " INNER JOIN request_work r ON l.endpoint_id = r.endpoint_id " +
+                " INNER JOIN endpoint e ON e.id = r.endpoint_id " +
+                " INNER JOIN video v ON v.id = r.video_id " +
+                " WHERE c.size > v.size + COALESCE((SELECT SUM(v.size) FROM stock s LEFT OUTER JOIN video v ON s.video_id = v.id WHERE s.cache_id = c.id), 0) " +
+                " GROUP BY \"cid\", \"vid\" " +
+                " ORDER BY \"gain\" DESC " +
+                ")a";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(request);
+        ResultSet rs = preparedStatement.executeQuery();
+        List<Integer> caches = new ArrayList<>();
+        List<Integer> videos = new ArrayList<>();
+        List<int[]> res = new ArrayList<>();
+        while(rs.next()){
+            int cache = rs.getInt("cid");
+            int video = rs.getInt("vid");
+            if(caches.contains(cache) || videos.contains(video)){
+               return res;
+            }
+            caches.add(cache);
+            videos.add(video);
+            res.add(new int[]{cache, video});
+        }
+        return res;
+    }
+
     public void store(int[] a) throws SQLException {
         Connection connection = getConnection();
         String insert = "INSERT INTO stock (cache_id, video_id) VALUES (?, ?)";
