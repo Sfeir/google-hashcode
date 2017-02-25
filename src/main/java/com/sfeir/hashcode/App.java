@@ -49,6 +49,11 @@ public class App {
         StockDB sdb = new StockDB(connector);
         sdb.deleteTable();
         sdb.createTable();
+
+        GainDB gdb = new GainDB(connector);
+        gdb.deleteTable();
+        gdb.createTable();
+        gdb.init();
     }
 
     private static void fill_db(Connector connector, String inputName) throws Exception {
@@ -111,8 +116,9 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         boolean init =false;
+        boolean clean = false;
 
-        List<String> inputs = Arrays.asList("videos_worth_spreading.in");
+        List<String> inputs = Arrays.asList("kittens.in");
         //List<String> inputs = Arrays.asList("me_at_the_zoo.in", "trending_today.in", "videos_worth_spreading.in");
 
         for (String inputName : inputs) {
@@ -122,10 +128,13 @@ public class App {
             if (init) {
                 clean_db(connector);
                 fill_db(connector, inputName);
-                continue;
+                System.out.println("INIT DONE");
             }
-            //createWorkDB(connector);
 
+            if(clean) {
+                createWorkDB(connector);
+                System.out.println("WORK CLEAN DONE");
+            }
             doYourJob(connector);
 
             Requestor r = new Requestor(connector);
