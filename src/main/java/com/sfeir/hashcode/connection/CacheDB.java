@@ -2,10 +2,7 @@ package com.sfeir.hashcode.connection;
 
 import com.sfeir.hashcode.model.Cache;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * Created by bcornu on 2/24/17.
@@ -51,5 +48,16 @@ public class CacheDB {
         preparedStatement.setInt(1, c.getId());
         preparedStatement.setInt(2, c.getSize());
         preparedStatement.executeUpdate();
+    }
+
+    public int getCacheSize()  throws SQLException {
+        String request = "SELECT size FROM cache LIMIT 1";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(request);
+        ResultSet rs = preparedStatement.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("size");
+        }
+        return -1;
     }
 }

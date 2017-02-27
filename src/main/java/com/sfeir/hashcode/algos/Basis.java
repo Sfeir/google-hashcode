@@ -1,6 +1,7 @@
 package com.sfeir.hashcode.algos;
 
 import com.sfeir.hashcode.connection.*;
+import com.sfeir.hashcode.model.Gain;
 
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -14,16 +15,22 @@ public class Basis {
 
     public static void run(Connector connector) throws SQLException {
         GainDB g = new GainDB(connector);
-        List<int[]> a;
+        StockDB s = new StockDB(connector);
+        CacheDB c = new CacheDB(connector);
+        int cacheSize = c.getCacheSize();
+        List<Gain> gains;
         long startTime = System.currentTimeMillis();
         int max_optims = g.getNbRemaining();
-        int nb_optims = g.getNbRemaining();
-        while(!(a = g.getNextsBests()).isEmpty()){
-            for (int[] b : a) {
-                System.out.println("stored: "+b[1] +" in "+b[0]);
-                nb_optims -= g.store(b);
+        int nb_optims = max_optims;
+        while(!(gains = g.getNextsBests()).isEmpty()){
+            for (Gain gain : gains) {
+                int availableSize = cacheSize - s.getUsedPlace(gain.getCacheId());
+                if (availableSize >= gain.getSize()){
+                    nb_optims -= g.store(gain);
+                }
+                nb_optims -= g.cleanLarges(gain.getCacheId(), availableSize);
+
             }
-            System.out.println("remain: "+nb_optims+"/"+max_optims+" optims");
 
             long diff = (System.currentTimeMillis() - startTime);
             long current = max_optims - nb_optims;
@@ -33,9 +40,8 @@ public class Basis {
                             TimeUnit.MILLISECONDS.toMinutes(eta) % TimeUnit.HOURS.toMinutes(1),
                             TimeUnit.MILLISECONDS.toSeconds(eta) % TimeUnit.MINUTES.toSeconds(1));
 
-            System.out.println("ETA: "+etaHms);
-            System.out.println("==============================");
+            System.out.print("\rremain: "+nb_optims+"/"+max_optims+" optims ==> " + "ETA: "+etaHms+"....................");
         }
-        System.out.println("NO MORE COMBINAISON FOUND");
+        System.out.println("\nNO MORE COMBINAISON FOUND");
     }
 }

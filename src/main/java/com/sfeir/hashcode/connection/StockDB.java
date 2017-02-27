@@ -1,9 +1,6 @@
 package com.sfeir.hashcode.connection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * Created by bcornu on 2/24/17.
@@ -51,4 +48,15 @@ public class StockDB {
         preparedStatement.executeUpdate();
     }
 
+    public int getUsedPlace(int cacheId) throws SQLException{
+        String request = "SELECT SUM(v.size) as \"remain\" FROM stock s LEFT OUTER JOIN video v ON s.video_id = v.id WHERE s.cache_id = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(request);
+        preparedStatement.setLong(1, cacheId);
+        ResultSet rs = preparedStatement.executeQuery();
+        if(rs.next()){
+            return rs.getInt("remain");
+        }
+        return -1;
+    }
 }

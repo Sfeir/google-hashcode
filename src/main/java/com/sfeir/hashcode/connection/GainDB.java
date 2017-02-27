@@ -1,6 +1,7 @@
 package com.sfeir.hashcode.connection;
 
 import com.sfeir.hashcode.model.Cache;
+import com.sfeir.hashcode.model.Gain;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -67,18 +68,14 @@ public class GainDB {
         preparedStatement.executeUpdate();
     }
 
-    public List<int[]> getNextsBests() throws SQLException {
-        String request = "SELECT g.cache_id, g.video_id, g.size \n" +
-                "FROM gains g\n" +
-                "INNER JOIN cache c ON c.id = g.cache_id\n" +
-                "WHERE c.size > g.size + COALESCE((SELECT SUM(v.size) FROM stock s LEFT OUTER JOIN video v ON s.video_id = v.id WHERE s.cache_id = c.id), 0)\n" +
-                "ORDER BY r_gain DESC LIMIT 100";
+    public List<Gain> getNextsBests() throws SQLException {
+        String request = "SELECT cache_id, video_id, size FROM gains ORDER BY r_gain DESC LIMIT 100";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(request);
         ResultSet rs = preparedStatement.executeQuery();
         List<Integer> caches = new ArrayList<>();
         List<Integer> videos = new ArrayList<>();
-        List<int[]> res = new ArrayList<>();
+        List<Gain> res = new ArrayList<>();
         while(rs.next()){
             int cache = rs.getInt("cache_id");
             int video = rs.getInt("video_id");
@@ -88,12 +85,12 @@ public class GainDB {
             }
             caches.add(cache);
             videos.add(video);
-            res.add(new int[]{cache, video, size});
+            res.add(new Gain(cache, video, size));
         }
         return res;
     }
 
-    public int impactCaches(int cid, int vid, int size) throws SQLException{
+    public int impactCaches(Gain g) throws SQLException{
         String select = "SELECT l.cache_id as \"cid\", sum(nb * (default_latency - latency)) AS \"diff\" FROM ( " +
                 "SELECT * FROM request r WHERE endpoint_id IN ( " +
                 "SELECT endpoint_id FROM latence WHERE cache_id = ? " +
@@ -104,8 +101,8 @@ public class GainDB {
                 "GROUP BY l.cache_id";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(select);
-        preparedStatement.setInt(1, cid);
-        preparedStatement.setInt(2, vid);
+        preparedStatement.setInt(1, g.getCacheId());
+        preparedStatement.setInt(2, g.getVideoID());
         ResultSet rs = preparedStatement.executeQuery();
         List<int[]> impacts = new ArrayList<>();
         String update = "UPDATE gains SET gain = gain - ?, r_gain = (gain - ?)/ size WHERE cache_id = ? and video_id = ?";
@@ -116,7 +113,7 @@ public class GainDB {
             preparedStatement.setLong(1, perte);
             preparedStatement.setLong(2, perte);
             preparedStatement.setInt(3, cache);
-            preparedStatement.setInt(4, vid);
+            preparedStatement.setInt(4, g.getVideoID());
             preparedStatement.executeUpdate();
         }
         String clean = "DELETE FROM gains WHERE gain <= 0;";
@@ -135,14 +132,23 @@ public class GainDB {
         return -1;
     }
 
-    public int store(int[] a) throws SQLException{
+    public int store(Gain g) throws SQLException{
         Connection connection = getConnection();
         String insert = "INSERT INTO stock (cache_id, video_id) VALUES (?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(insert);
-        preparedStatement.setInt(1, a[0]);
-        preparedStatement.setInt(2, a[1]);
+        preparedStatement.setInt(1, g.getCacheId());
+        preparedStatement.setInt(2, g.getVideoID());
         preparedStatement.executeUpdate();
 
-        return impactCaches(a[0], a[1], a[2]);
+        return impactCaches(g);
+    }
+
+    public int cleanLarges(int cacheId, int availableSize) throws SQLException{
+        String clean = "DELETE FROM gains WHERE cache_id = ? AND size > ?;";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(clean);
+        preparedStatement.setInt(1, cacheId);
+        preparedStatement.setInt(2, availableSize);
+        return preparedStatement.executeUpdate();
     }
 }

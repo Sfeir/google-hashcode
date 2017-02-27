@@ -118,7 +118,7 @@ public class App {
         boolean init =false;
         boolean clean = false;
 
-        List<String> inputs = Arrays.asList("kittens.in");
+        List<String> inputs = Arrays.asList("trending_today.in");
         //List<String> inputs = Arrays.asList("me_at_the_zoo.in", "trending_today.in", "videos_worth_spreading.in");
 
         for (String inputName : inputs) {
