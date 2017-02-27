@@ -37,4 +37,9 @@ public class Video {
         }
         throw new IllegalArgumentException("not existing endpoint id: " + videoId);
     }
+
+    @Override
+    public String toString() {
+        return "video: "+id+" : "+size;
+    }
 }

@@ -60,4 +60,15 @@ public class CacheDB {
         }
         return -1;
     }
+
+    public int getCacheCount() throws SQLException{
+        String request = "SELECT COUNT(0) as \"nb\" FROM cache";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(request);
+        ResultSet rs = preparedStatement.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("nb");
+        }
+        return -1;
+    }
 }

@@ -1,6 +1,6 @@
 package com.sfeir.hashcode;
 
-import com.sfeir.hashcode.algos.Basis;
+import com.sfeir.hashcode.algos.Trending;
 import com.sfeir.hashcode.connection.*;
 import com.sfeir.hashcode.model.Cache;
 import com.sfeir.hashcode.model.Endpoint;
@@ -13,7 +13,6 @@ import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Hello world!
@@ -135,29 +134,25 @@ public class App {
                 createWorkDB(connector);
                 System.out.println("WORK CLEAN DONE");
             }
-            doYourJob(connector);
+            List<String> res = doYourJob(connector);
 
-            Requestor r = new Requestor(connector);
-            Map<Integer, List<Integer>> cached = r.getStock();
-            String[] res = new String[cached.keySet().size()+1];
-            res[0] = ""+cached.keySet().size();
-            int i = 0;
-            for (Integer c : cached.keySet()) {
-                res[++i] = c+"";
-                for (Integer v : cached.get(c)) {
-                    res[i] += " "+v;
-                }
-            }
-//            System.out.println("set output");
-//            for (Cache c : Cache.getCaches()) {
-//                res.add(c.getOutput());
-//                System.out.println(c.getOutput());
+//            Requestor r = new Requestor(connector);
+//            Map<Integer, List<Integer>> cached = r.getStock();
+//            String[] res = new String[cached.keySet().size()+1];
+//            res[0] = ""+cached.keySet().size();
+//            int i = 0;
+//            for (Integer c : cached.keySet()) {
+//                res[++i] = c+"";
+//                for (Integer v : cached.get(c)) {
+//                    res[i] += " "+v;
+//                }
 //            }
-            Files.write(new File(FOLDER_OUTPUT, inputName).toPath(), Arrays.asList(res));
+            Files.write(new File(FOLDER_OUTPUT, inputName).toPath(), res);
         }
     }
 
-    private static void doYourJob(Connector connector) throws SQLException {
-        Basis.run(connector);
+    private static List<String> doYourJob(Connector connector) throws SQLException {
+        //Basis.run(connector);
+        return Trending.run(connector);
     }
 }
