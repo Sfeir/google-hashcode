@@ -1,4 +1,5 @@
-
-/.idea/
-/target/
-/hashcode.iml
+node_modules
+output
+.idea/
+*.iml
+.DS_Store
