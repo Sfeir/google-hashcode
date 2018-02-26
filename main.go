@@ -1,12 +1,11 @@
 package main
 
 import (
-	"io/ioutil"
-	"os"
-
-	"github.com/Sfeir/google-hashcode-lille/input"
+	"github.com/Sfeir/google-hashcode-lille/src/input"
 	logger "github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
+	"io/ioutil"
+	"os"
 )
 
 func main() {

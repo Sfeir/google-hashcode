@@ -9,18 +9,10 @@ import (
 	"strings"
 
 	logger "github.com/sirupsen/logrus"
+	"github.com/Sfeir/google-hashcode-lille/src/model"
 )
 
-type Cell struct {
-	Tomato, Taken bool
-}
-
-type Inputs struct {
-	NbRows, NbColumns, MinNumberOfIngredient, MaxSizeSlice int
-	Cells                                                  [][]Cell
-}
-
-func GetInputs(path string) Inputs {
+func GetInputs(path string) model.Inputs {
 	file, err := os.Open(path)
 	if err != nil {
 		log.Fatal(err)
@@ -29,7 +21,7 @@ func GetInputs(path string) Inputs {
 
 	scanner := bufio.NewScanner(file)
 	i := 0
-	var datas Inputs
+	var datas model.Inputs
 
 	for scanner.Scan() { //chaque ligne
 		ligne := scanner.Text()
@@ -57,9 +49,9 @@ func GetInputs(path string) Inputs {
 				log.Fatalf("Cannot parse maxSizeSlice %v", parameters[3])
 			}
 
-			datas.Cells = make([][]Cell, datas.NbRows)
+			datas.Cells = make([][]model.Cell, datas.NbRows)
 			for y := 0; y < datas.NbRows; y++ {
-				datas.Cells[y] = make([]Cell, datas.NbColumns)
+				datas.Cells[y] = make([]model.Cell, datas.NbColumns)
 			}
 		} else {
 			for nb, c := range ligne {
