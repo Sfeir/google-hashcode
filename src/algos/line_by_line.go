@@ -15,7 +15,9 @@ func LineByLine(inputs *model.Inputs) []model.Slice {
 	for lineNumber, row := range inputs.Cells {
 		logger.Debug(row)
 		var nbTomato, nbMushroom, nbUnit int
-		for colNumber, cell := range row {
+		colNumber := 0
+		for colNumber < len(row) {
+			cell := row[colNumber]
 			if newSlice {
 				nbTomato = 0
 				nbMushroom = 0
@@ -29,7 +31,10 @@ func LineByLine(inputs *model.Inputs) []model.Slice {
 			}
 			nbUnit++
 
-			if nbTomato > inputs.MinNumberOfIngredient && nbMushroom > inputs.MinNumberOfIngredient {
+			if nbUnit > inputs.MaxSizeSlice {
+				colNumber = startColumn
+				newSlice = true
+			} else if nbTomato > inputs.MinNumberOfIngredient && nbMushroom > inputs.MinNumberOfIngredient {
 				for i := startColumn; i < colNumber; i++ {
 					inputs.Cells[lineNumber][i].Taken = true
 				}
@@ -42,9 +47,8 @@ func LineByLine(inputs *model.Inputs) []model.Slice {
 
 				nbSlices++
 				newSlice = true
-			} else if nbUnit > inputs.MaxSizeSlice {
-				newSlice = true
 			}
+			colNumber++
 		}
 	}
 
