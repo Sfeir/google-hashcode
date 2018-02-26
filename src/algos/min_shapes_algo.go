@@ -58,8 +58,8 @@ func declareAllCellsTaken(s shape, c [][]model.Cell, x int, y int) model.Slice {
 func MinShapesAlgo(inputs *model.Inputs) []model.Slice {
 	availableShapes := calculateAvailableShapes(inputs.MaxSizeSlice)
 	result := []model.Slice{}
-	for x := 0; x < model.NbRows; x++ {
-		for y := 0; y < model.NbColumns; y++ {
+	for x := 0; x < inputs.NbRows; x++ {
+		for y := 0; y < inputs.NbColumns; y++ {
 			for _, s := range availableShapes {
 				if shapeCanFit(s, inputs.Cells, x, y, inputs.MinNumberOfIngredient) {
 					result = append(result, declareAllCellsTaken(s, inputs.Cells, x, y))

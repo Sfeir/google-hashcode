@@ -59,7 +59,9 @@ func main() {
 
 		for _, file := range files {
 			if file.Name() != ".DS_Store" {
-				runOn(inputDir + string(os.PathSeparator) + file.Name())
+				if !isTest || file.Name() == "small.in" {
+					runOn(inputDir + string(os.PathSeparator) + file.Name())
+				}
 			}
 		}
 
@@ -74,8 +76,8 @@ func main() {
 func runOn(path string) {
 	logger.Info("starting process for: ", path)
 	data := io.GetInputs(path)
-	logger.Info("NbRow : ", model.NbRows)
-	logger.Info("NbColumns : ", model.NbColumns)
+	logger.Info("NbRow : ", data.NbRows)
+	logger.Info("NbColumns : ", data.NbColumns)
 	logger.Info("MinNumberOfIngredient : ", data.MinNumberOfIngredient)
 	logger.Info("MaxSizeSlice : ", data.MaxSizeSlice)
 

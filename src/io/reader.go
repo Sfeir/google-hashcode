@@ -29,11 +29,11 @@ func GetInputs(path string) model.Inputs {
 				logger.Fatalf("Have %d parameters instead of 4 : for line %d", len(parameters), i)
 			}
 
-			model.NbRows, err = strconv.Atoi(parameters[0])
+			datas.NbRows, err = strconv.Atoi(parameters[0])
 			if err != nil {
 				logger.Fatalf("Cannot parse nbRows %v", parameters[0])
 			}
-			model.NbColumns, err = strconv.Atoi(parameters[1])
+			datas.NbColumns, err = strconv.Atoi(parameters[1])
 			if err != nil {
 				logger.Fatalf("Cannot parse nbColumns %v", parameters[1])
 			}
@@ -46,9 +46,9 @@ func GetInputs(path string) model.Inputs {
 				logger.Fatalf("Cannot parse maxSizeSlice %v", parameters[3])
 			}
 
-			datas.Cells = make([][]model.Cell, model.NbRows)
-			for y := 0; y < model.NbRows; y++ {
-				datas.Cells[y] = make([]model.Cell, model.NbColumns)
+			datas.Cells = make([][]model.Cell, datas.NbRows)
+			for y := 0; y < datas.NbRows; y++ {
+				datas.Cells[y] = make([]model.Cell, datas.NbColumns)
 			}
 		} else {
 			for nb, c := range ligne {
