@@ -17,23 +17,30 @@ func calculateAvailableShapes(size int) []shape {
 	return result
 }
 
-func shapeCanFit(s shape, c [][]model.Cell, x int, y int) bool {
+func shapeCanFit(s shape, c [][]model.Cell, x int, y int, eltCount int) bool {
 	logger.Debug("try shape : ", s, " from ", x, " to ", y)
 	if (x+s.column > len(c[0])) || (y+s.row > len(c)) {
 		logger.Debug("MinAlgo :Can't fit -- out of bounds")
 		return false
 	}
 
+	tomatoCounter := 0
+	mushroomCounter := 0
 	for i := y; i < y+s.row; i++ {
 		for j := x; j < x+s.column; j++ {
+			if c[i][j].Tomato {
+				tomatoCounter++
+			} else {
+				mushroomCounter++
+			}
 			if true == c[i][j].Taken {
 				logger.Debug("MinAlgo :Can't fit")
 				return false
 			}
 		}
 	}
-	logger.Debug("MinAlgo : Fit !")
-	return true
+	logger.Debug("MinAlgo : tomato(", tomatoCounter, ") mush(", mushroomCounter, ") for min of ", eltCount)
+	return tomatoCounter >= eltCount && mushroomCounter >= eltCount
 }
 
 func declareAllCellsTaken(s shape, c [][]model.Cell, x int, y int) model.Slice {
@@ -51,10 +58,10 @@ func declareAllCellsTaken(s shape, c [][]model.Cell, x int, y int) model.Slice {
 func MinShapesAlgo(inputs *model.Inputs) []model.Slice {
 	availableShapes := calculateAvailableShapes(inputs.MaxSizeSlice)
 	result := []model.Slice{}
-	for x := 0; x < model.NbRows; x++ {
-		for y := 0; y < model.NbColumns; y++ {
+	for x := 0; x < inputs.NbRows; x++ {
+		for y := 0; y < inputs.NbColumns; y++ {
 			for _, s := range availableShapes {
-				if shapeCanFit(s, inputs.Cells, x, y) {
+				if shapeCanFit(s, inputs.Cells, x, y, inputs.MinNumberOfIngredient) {
 					result = append(result, declareAllCellsTaken(s, inputs.Cells, x, y))
 				}
 			}
