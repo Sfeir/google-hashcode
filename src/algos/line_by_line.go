@@ -20,6 +20,7 @@ func LineByLine(inputs *model.Inputs) []model.Slice {
 				nbTomato = 0
 				nbMushroom = 0
 				startColumn = colNumber
+				newSlice = false
 			}
 			if cell.Tomato {
 				nbTomato++
