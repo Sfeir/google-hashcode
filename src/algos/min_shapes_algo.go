@@ -3,6 +3,7 @@ package algos
 import (
 	"github.com/Sfeir/google-hashcode-lille/src/model"
 	logger "github.com/sirupsen/logrus"
+	"math"
 )
 
 type shape struct {
@@ -13,7 +14,13 @@ func calculateAvailableShapes(size int) []shape {
 	var result = []shape{}
 	result = append(result, shape{row: 1, column: size})
 	result = append(result, shape{row: size, column: 1})
-	// TODO(sylvain) finish the rectangles and square shapes.
+
+	ceil := int(math.Ceil(float64(size) / 2))
+	floor := int(math.Floor(float64(size) / 2))
+	result = append(result, shape{ceil, floor})
+	if ceil != floor {
+		result = append(result, shape{floor, ceil})
+	}
 	return result
 }
 
