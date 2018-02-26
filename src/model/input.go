@@ -1,6 +1,11 @@
 package model
 
+var (
+	NbColumns int
+	NbRows    int
+)
+
 type Inputs struct {
-	NbRows, NbColumns, MinNumberOfIngredient, MaxSizeSlice int
-	Cells                                                  [][]Cell
+	MinNumberOfIngredient, MaxSizeSlice int
+	Cells                               [][]Cell
 }

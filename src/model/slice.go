@@ -10,9 +10,9 @@ type Slice struct {
 
 func (s *Slice) ToStr() string {
 	result := ""
-	result += strconv.Itoa(s.StartX) + " "
 	result += strconv.Itoa(s.StartY) + " "
-	result += strconv.Itoa(s.EndX) + " "
-	result += strconv.Itoa(s.EndY)
+	result += strconv.Itoa(s.StartX) + " "
+	result += strconv.Itoa(s.EndY) + " "
+	result += strconv.Itoa(s.EndX)
 	return result
 }
