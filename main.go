@@ -82,7 +82,7 @@ func runOn(path string) {
 	var res []model.Slice
 	var localRes []model.Slice
 
-	localRes = algos.MockAlgo(&data)
+	//	localRes = algos.MockAlgo(&data)
 	logger.Info("resOne : ", localRes)
 	res = append(res, localRes...)
 	logger.Info("resTotal : ", res)

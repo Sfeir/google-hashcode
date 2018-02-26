@@ -53,6 +53,7 @@ func GetInputs(path string) model.Inputs {
 		} else {
 			for nb, c := range ligne {
 				datas.Cells[i-1][nb].Tomato = (c == 'T')
+				datas.Cells[i-1][nb].Taken = false
 			}
 		}
 		i++

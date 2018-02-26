@@ -1,6 +1,9 @@
 package algos
 
-import "github.com/Sfeir/google-hashcode-lille/src/model"
+import (
+	"github.com/Sfeir/google-hashcode-lille/src/model"
+	logger "github.com/sirupsen/logrus"
+)
 
 type shape struct {
 	row, column int
@@ -15,27 +18,34 @@ func calculateAvailableShapes(size int) []shape {
 }
 
 func shapeCanFit(s shape, c [][]model.Cell, x int, y int) bool {
+	logger.Debug("try shape : ", s, " from ", x, " to ", y)
 	if (x+s.column > len(c[0])) || (y+s.row > len(c)) {
+		logger.Debug("MinAlgo :Can't fit -- out of bounds")
 		return false
 	}
 
-	for i := x; i < x+s.row; i++ {
-		for j := y; j < y+s.column; j++ {
-			if !c[i][j].Taken {
+	for i := y; i < y+s.row; i++ {
+		for j := x; j < x+s.column; j++ {
+			if true == c[i][j].Taken {
+				logger.Debug("MinAlgo :Can't fit")
 				return false
 			}
 		}
 	}
+	logger.Debug("MinAlgo : Fit !")
 	return true
 }
 
 func declareAllCellsTaken(s shape, c [][]model.Cell, x int, y int) model.Slice {
-	for i := x; i < x+s.row; i++ {
-		for j := y; j < y+s.column; j++ {
+	for i := y; i < y+s.row; i++ {
+		for j := x; j < x+s.column; j++ {
+			logger.Debug("Taken : ", c[i][j])
 			c[i][j].Taken = true
 		}
 	}
-	return model.Slice{StartX: x, StartY: y, EndX: x + s.row, EndY: y + s.column}
+	result := model.Slice{StartX: x, StartY: y, EndX: x + s.column, EndY: y + s.row}
+	logger.Debug("Slice found :", result)
+	return result
 }
 
 func MinShapesAlgo(inputs *model.Inputs) []model.Slice {
