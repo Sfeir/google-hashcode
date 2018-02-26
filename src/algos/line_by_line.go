@@ -17,6 +17,8 @@ func LineByLine(inputs *model.Inputs) []model.Slice {
 		var nbTomato, nbMushroom, nbUnit int
 		for colNumber, cell := range row {
 			if newSlice {
+				nbTomato = 0
+				nbMushroom = 0
 				startColumn = colNumber
 			}
 			if cell.Tomato {
@@ -34,7 +36,9 @@ func LineByLine(inputs *model.Inputs) []model.Slice {
 				logger.Debug("Slice : startRow ", lineNumber)
 				logger.Debug("Slice : endColumn ", colNumber)
 				logger.Debug("Slice : endRow ", lineNumber)
+
 				slices = append(slices, model.Slice{startColumn, lineNumber, colNumber, lineNumber})
+
 				nbSlices++
 				newSlice = true
 			} else if nbUnit > inputs.MaxSizeSlice {
@@ -45,5 +49,5 @@ func LineByLine(inputs *model.Inputs) []model.Slice {
 
 	logger.Info("Number of slices ", nbSlices)
 
-	return slices[:nbSlices]
+	return slices
 }

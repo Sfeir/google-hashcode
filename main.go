@@ -1,13 +1,14 @@
 package main
 
 import (
+	"io/ioutil"
+	"os"
+
 	"github.com/Sfeir/google-hashcode-lille/src/algos"
 	"github.com/Sfeir/google-hashcode-lille/src/io"
 	"github.com/Sfeir/google-hashcode-lille/src/model"
 	logger "github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
-	"io/ioutil"
-	"os"
 )
 
 func main() {
@@ -84,10 +85,15 @@ func runOn(path string) {
 	var res []model.Slice
 	var localRes []model.Slice
 
-	localRes = algos.MinShapesAlgo(&data)
+	localRes = algos.LineByLine(&data)
 	logger.Info("nb parts MinShapesAlgo : ", len(localRes))
 	res = append(res, localRes...)
 	logger.Info("nb parts total : ", len(res))
+
+	/*localRes = algos.MinShapesAlgo(&data)
+	logger.Info("nb parts MinShapesAlgo : ", len(localRes))
+	res = append(res, localRes...)
+	logger.Info("nb parts total : ", len(res)) */
 
 	io.Write(path, res)
 
