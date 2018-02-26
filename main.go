@@ -74,23 +74,18 @@ func main() {
 func runOn(path string) {
 	logger.Info("starting process for: ", path)
 	data := io.GetInputs(path)
-	logger.Info("NbRow : ", data.NbRows)
-	logger.Info("NbColumns : ", data.NbColumns)
+	logger.Info("NbRow : ", model.NbRows)
+	logger.Info("NbColumns : ", model.NbColumns)
 	logger.Info("MinNumberOfIngredient : ", data.MinNumberOfIngredient)
 	logger.Info("MaxSizeSlice : ", data.MaxSizeSlice)
 
 	var res []model.Slice
 	var localRes []model.Slice
 
-	localRes = algos.MockAlgo(&data)
-	logger.Info("resOne : ", localRes)
-	res = append(res, localRes...)
-	logger.Info("resTotal : ", res)
-
 	localRes = algos.MinShapesAlgo(&data)
-	logger.Info("resOne : ", localRes)
+	logger.Info("nb parts MinShapesAlgo : ", len(localRes))
 	res = append(res, localRes...)
-	logger.Info("resTotal : ", res)
+	logger.Info("nb parts total : ", len(res))
 
 	io.Write(path, res)
 

@@ -1,33 +1,60 @@
 package algos
 
-import "github.com/Sfeir/google-hashcode-lille/src/model"
+import (
+	"github.com/Sfeir/google-hashcode-lille/src/model"
+	logger "github.com/sirupsen/logrus"
+)
 
 type shape struct {
 	row, column int
 }
 
 func calculateAvailableShapes(size int) []shape {
-	// TODO(sylvain) return [](row,columns)
-	return []shape{}
+	var result = []shape{}
+	result = append(result, shape{row: 1, column: size})
+	result = append(result, shape{row: size, column: 1})
+	// TODO(sylvain) finish the rectangles and square shapes.
+	return result
 }
 
 func shapeCanFit(s shape, c [][]model.Cell, x int, y int) bool {
-	// TODO(sylvain) return true if all the cells between (x,y) and that fits in S are available
-	return false
+	logger.Debug("try shape : ", s, " from ", x, " to ", y)
+	if (x+s.column > len(c[0])) || (y+s.row > len(c)) {
+		logger.Debug("MinAlgo :Can't fit -- out of bounds")
+		return false
+	}
+
+	for i := y; i < y+s.row; i++ {
+		for j := x; j < x+s.column; j++ {
+			if true == c[i][j].Taken {
+				logger.Debug("MinAlgo :Can't fit")
+				return false
+			}
+		}
+	}
+	logger.Debug("MinAlgo : Fit !")
+	return true
 }
 
 func declareAllCellsTaken(s shape, c [][]model.Cell, x int, y int) model.Slice {
-	// TODO(sylvain) set all the taken to true for cell that are in s starting from (x,y)
-	return model.Slice{}
+	for i := y; i < y+s.row; i++ {
+		for j := x; j < x+s.column; j++ {
+			logger.Debug("Taken : ", c[i][j])
+			c[i][j].Taken = true
+		}
+	}
+	result := model.Slice{StartX: x, StartY: y, EndX: x + s.column, EndY: y + s.row}
+	logger.Debug("Slice found :", result)
+	return result
 }
 
 func MinShapesAlgo(inputs *model.Inputs) []model.Slice {
 	availableShapes := calculateAvailableShapes(inputs.MaxSizeSlice)
 	result := []model.Slice{}
-	for x := 0; x < inputs.NbRows; x++ {
-		for y := 0; y < inputs.NbColumns; y++ {
+	for x := 0; x < model.NbRows; x++ {
+		for y := 0; y < model.NbColumns; y++ {
 			for _, s := range availableShapes {
-				if (shapeCanFit(s, inputs.Cells, x, y)) {
+				if shapeCanFit(s, inputs.Cells, x, y) {
 					result = append(result, declareAllCellsTaken(s, inputs.Cells, x, y))
 				}
 			}
