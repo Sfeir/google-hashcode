@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/Sfeir/google-hashcode-lille/src/algos"
-	"github.com/Sfeir/google-hashcode-lille/src/input"
+	"github.com/Sfeir/google-hashcode-lille/src/io"
 	"github.com/Sfeir/google-hashcode-lille/src/model"
 	logger "github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
@@ -73,17 +73,25 @@ func main() {
 
 func runOn(path string) {
 	logger.Info("starting process for: ", path)
-	data := input.GetInputs(path)
+	data := io.GetInputs(path)
 	logger.Info("NbRow : ", data.NbRows)
 	logger.Info("NbColumns : ", data.NbColumns)
 	logger.Info("MinNumberOfIngredient : ", data.MinNumberOfIngredient)
 	logger.Info("MaxSizeSlice : ", data.MaxSizeSlice)
 
 	var res []model.Slice
+	var localRes []model.Slice
 
-	res1 := algos.MockAlgo(&data)
-	logger.Info("resOne : ", res1)
-	res = append(res, res1...)
+	localRes = algos.MockAlgo(&data)
+	logger.Info("resOne : ", localRes)
+	res = append(res, localRes...)
 	logger.Info("resTotal : ", res)
+
+	localRes = algos.MinShapesAlgo(&data)
+	logger.Info("resOne : ", localRes)
+	res = append(res, localRes...)
+	logger.Info("resTotal : ", res)
+
+	io.Write(res)
 
 }
