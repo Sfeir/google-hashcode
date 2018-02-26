@@ -28,3 +28,6 @@ test: build
 
 debug: build
 	@google-hashcode-lille -d ${BASEDIR} -t -v
+
+zip:
+	zip -r hashcode.zip main.go src/* input/*
