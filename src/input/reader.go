@@ -2,12 +2,9 @@ package input
 
 import (
 	"bufio"
-	"log"
-
 	"os"
 	"strconv"
 	"strings"
-
 	logger "github.com/sirupsen/logrus"
 	"github.com/Sfeir/google-hashcode-lille/src/model"
 )
@@ -15,7 +12,7 @@ import (
 func GetInputs(path string) model.Inputs {
 	file, err := os.Open(path)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	defer file.Close()
 
@@ -29,24 +26,24 @@ func GetInputs(path string) model.Inputs {
 			logger.Info(ligne)
 			parameters := strings.Split(ligne, " ")
 			if len(parameters) != 4 {
-				log.Fatalf("Have %d parameters instead of 4 : for line %d", len(parameters), i)
+				logger.Fatalf("Have %d parameters instead of 4 : for line %d", len(parameters), i)
 			}
 
 			datas.NbRows, err = strconv.Atoi(parameters[0])
 			if err != nil {
-				log.Fatalf("Cannot parse nbRows %v", parameters[0])
+				logger.Fatalf("Cannot parse nbRows %v", parameters[0])
 			}
 			datas.NbColumns, err = strconv.Atoi(parameters[1])
 			if err != nil {
-				log.Fatalf("Cannot parse nbColumns %v", parameters[1])
+				logger.Fatalf("Cannot parse nbColumns %v", parameters[1])
 			}
 			datas.MinNumberOfIngredient, err = strconv.Atoi(parameters[2])
 			if err != nil {
-				log.Fatalf("Cannot parse minNumberOfIngredient %v", parameters[2])
+				logger.Fatalf("Cannot parse minNumberOfIngredient %v", parameters[2])
 			}
 			datas.MaxSizeSlice, err = strconv.Atoi(parameters[3])
 			if err != nil {
-				log.Fatalf("Cannot parse maxSizeSlice %v", parameters[3])
+				logger.Fatalf("Cannot parse maxSizeSlice %v", parameters[3])
 			}
 
 			datas.Cells = make([][]model.Cell, datas.NbRows)
