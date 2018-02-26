@@ -92,6 +92,6 @@ func runOn(path string) {
 	res = append(res, localRes...)
 	logger.Info("resTotal : ", res)
 
-	io.Write(res)
+	io.Write(path, res)
 
 }
