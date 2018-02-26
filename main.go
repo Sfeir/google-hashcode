@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/Sfeir/google-hashcode-lille/src/algos"
 	"github.com/Sfeir/google-hashcode-lille/src/input"
 	logger "github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
@@ -72,9 +73,11 @@ func main() {
 func runOn(path string) {
 	logger.Info("starting process for: ", path)
 	data := input.GetInputs(path)
-
 	logger.Info("NbRow : ", data.NbRows)
 	logger.Info("NbColumns : ", data.NbColumns)
 	logger.Info("MinNumberOfIngredient : ", data.MinNumberOfIngredient)
 	logger.Info("MaxSizeSlice : ", data.MaxSizeSlice)
+	res1 := algos.MockAlgo(&data)
+	logger.Info("resOne : ", res1)
+
 }
