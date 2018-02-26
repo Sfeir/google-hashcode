@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/Sfeir/google-hashcode-lille/src/algos"
 	"github.com/Sfeir/google-hashcode-lille/src/input"
+	"github.com/Sfeir/google-hashcode-lille/src/model"
 	logger "github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 	"io/ioutil"
@@ -77,7 +78,12 @@ func runOn(path string) {
 	logger.Info("NbColumns : ", data.NbColumns)
 	logger.Info("MinNumberOfIngredient : ", data.MinNumberOfIngredient)
 	logger.Info("MaxSizeSlice : ", data.MaxSizeSlice)
+
+	var res []model.Slice
+
 	res1 := algos.MockAlgo(&data)
 	logger.Info("resOne : ", res1)
+	res = append(res, res1...)
+	logger.Info("resTotal : ", res)
 
 }
