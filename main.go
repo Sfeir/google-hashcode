@@ -60,7 +60,7 @@ func main() {
 
 		for _, file := range files {
 			if file.Name() != ".DS_Store" {
-				if !isTest || file.Name() == "example.in" {
+				if !isTest || file.Name() == "small.in" {
 					runOn(inputDir + string(os.PathSeparator) + file.Name())
 				}
 			}
