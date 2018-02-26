@@ -6,10 +6,45 @@ import (
 )
 
 func LineByLine(inputs *model.Inputs) []model.Slice {
-	for _, row := range inputs.Cells {
-		for _, cell := range row {
-			logger.Debug(cell)
+
+	slices := []model.Slice{}
+
+	newSlice := true
+	var startColumn int
+	nbSlices := 0
+
+	for lineNumber, row := range inputs.Cells {
+		logger.Debug(row)
+		var nbTomato, nbMushroom, nbUnit int
+		for colNumber, cell := range row {
+			if newSlice {
+				startColumn = colNumber
+			}
+			if cell.Tomato {
+				nbTomato++
+			} else {
+				nbMushroom++
+			}
+			nbUnit++
+
+			if nbTomato > inputs.MinNumberOfIngredient && nbMushroom > inputs.MinNumberOfIngredient {
+				for i := startColumn; i < colNumber; i++ {
+					inputs.Cells[lineNumber][i].Taken = true
+				}
+				logger.Debug("Slice : startColumn ", startColumn)
+				logger.Debug("Slice : startRow ", lineNumber)
+				logger.Debug("Slice : endColumn ", colNumber)
+				logger.Debug("Slice : endRow ", lineNumber)
+				slices = append(slices, model.Slice{startColumn, lineNumber, colNumber, lineNumber})
+				nbSlices++
+				newSlice = true
+			} else if nbUnit > inputs.MaxSizeSlice {
+				newSlice = true
+			}
 		}
 	}
-	return []model.Slice{}
+
+	logger.Info("Number of slices ", nbSlices)
+
+	return slices[:nbSlices]
 }
