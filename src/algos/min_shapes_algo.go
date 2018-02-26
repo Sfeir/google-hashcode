@@ -7,7 +7,7 @@ import (
 )
 
 type shape struct {
-	row, column int
+	column, row int
 }
 
 func calculateAvailableShapes(size int) []shape {
@@ -25,16 +25,18 @@ func calculateAvailableShapes(size int) []shape {
 }
 
 func shapeCanFit(s shape, c [][]model.Cell, x int, y int, eltCount int) bool {
-	logger.Debug("try shape : ", s, " from ", x, " to ", y)
-	if (x+s.column > len(c[0])) || (y+s.row > len(c)) {
+	endX := x + s.column
+	endY := y + s.row
+	logger.Debug("try shape : ", s, " from (", x, ",", y, ") to (", endX-1, ",", endY-1, ")")
+	if (endX >= len(c[0])) || (endY >= len(c)) {
 		logger.Debug("MinAlgo :Can't fit -- out of bounds")
 		return false
 	}
 
 	tomatoCounter := 0
 	mushroomCounter := 0
-	for i := y; i < y+s.row; i++ {
-		for j := x; j < x+s.column; j++ {
+	for j := x; j < endX; j++ {
+		for i := y; i < endY; i++ {
 			if c[i][j].Tomato {
 				tomatoCounter++
 			} else {
@@ -51,23 +53,22 @@ func shapeCanFit(s shape, c [][]model.Cell, x int, y int, eltCount int) bool {
 }
 
 func declareAllCellsTaken(s shape, c [][]model.Cell, x int, y int) model.Slice {
-	for i := y; i < y+s.row; i++ {
-		for j := x; j < x+s.column; j++ {
-			logger.Debug("Taken : ", c[i][j])
+	for j := x; j < x+s.column; j++ {
+		for i := y; i < y+s.row; i++ {
 			c[i][j].Taken = true
 		}
 	}
-	result := model.Slice{StartX: x, StartY: y, EndX: x + s.column, EndY: y + s.row}
+	result := model.Slice{StartX: x, StartY: y, EndX: x + s.column - 1, EndY: y + s.row - 1}
 	logger.Debug("Slice found :", result)
 	return result
 }
 
 func MinShapesAlgo(inputs *model.Inputs) []model.Slice {
-	availableShapes := calculateAvailableShapes(inputs.MaxSizeSlice)
+	availableShapes := calculateAvailableShapes(2 * inputs.MinNumberOfIngredient)
 	result := []model.Slice{}
-	for x := 0; x < inputs.NbRows; x++ {
-		for y := 0; y < inputs.NbColumns; y++ {
-			for _, s := range availableShapes {
+	for _, s := range availableShapes {
+		for y := 0; y < inputs.NbRows; y++ {
+			for x := 0; x < inputs.NbColumns; x++ {
 				if shapeCanFit(s, inputs.Cells, x, y, inputs.MinNumberOfIngredient) {
 					result = append(result, declareAllCellsTaken(s, inputs.Cells, x, y))
 				}
