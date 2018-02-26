@@ -6,8 +6,10 @@ import (
 )
 
 func MockAlgo(inputs *model.Inputs) []model.Slice {
-	for _, cell := range inputs.Cells {
-		logger.Debug(cell)
+	for _, row := range inputs.Cells {
+		for _, cell := range row {
+			logger.Debug(cell)
+		}
 	}
 	return []model.Slice{}
 }

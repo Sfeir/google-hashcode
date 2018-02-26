@@ -2,11 +2,11 @@ package input
 
 import (
 	"bufio"
+	"github.com/Sfeir/google-hashcode-lille/src/model"
+	logger "github.com/sirupsen/logrus"
 	"os"
 	"strconv"
 	"strings"
-	logger "github.com/sirupsen/logrus"
-	"github.com/Sfeir/google-hashcode-lille/src/model"
 )
 
 func GetInputs(path string) model.Inputs {

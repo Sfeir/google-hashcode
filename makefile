@@ -17,7 +17,7 @@ dep:
 	@dep ensure
 
 build:
-	@go fmt github.com/Sfeir/google-hashcode-lille
+	@go fmt github.com/Sfeir/google-hashcode-lille/...
 	@go install github.com/Sfeir/google-hashcode-lille
 
 run: build
