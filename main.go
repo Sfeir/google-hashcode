@@ -86,7 +86,7 @@ func runOn(path string) {
 	var localRes []model.Slice
 
 	localRes = algos.LineByLine(&data)
-	logger.Info("nb parts MinShapesAlgo : ", len(localRes))
+	logger.Info("nb parts LineByLine algo : ", len(localRes))
 	res = append(res, localRes...)
 	logger.Info("nb parts total : ", len(res))
 
