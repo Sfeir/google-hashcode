@@ -1,13 +1,14 @@
 package main
 
 import (
+	"io/ioutil"
+	"os"
+
 	"github.com/Sfeir/google-hashcode-lille/src/algos"
 	"github.com/Sfeir/google-hashcode-lille/src/io"
 	"github.com/Sfeir/google-hashcode-lille/src/model"
 	logger "github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
-	"io/ioutil"
-	"os"
 )
 
 const testFile = "a_example.in"
@@ -96,6 +97,6 @@ func runOn(path string) {
 		model.Fleet = append(model.Fleet, taxi)
 	}
 
-	res := algos.MockAlgo()
+	res := algos.Dumbass()
 	io.Write(path, res)
 }

@@ -5,13 +5,13 @@ import (
 )
 
 type Ride struct {
-	BeginRow    int
-	BeginColumn int
-	EndRow      int
-	EndColumn   int
+	BeginRow     int
+	BeginColumn  int
+	EndRow       int
+	EndColumn    int
 	EarlistStart int
 	LatestFinish int
-	Done bool
+	Done         bool
 }
 
 func (r *Ride) LogContent() {

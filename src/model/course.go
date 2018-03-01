@@ -2,5 +2,5 @@ package model
 
 type Course struct {
 	Vehicule int
-	Rides []int
+	Rides    []int
 }

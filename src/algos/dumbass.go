@@ -6,17 +6,24 @@ import (
 
 func Dumbass() []model.Course {
 
-	courses := []model.Course{}
+	courses := make([]model.Course, model.FleetSize)
 
 	for step := 0; step < model.TotalTime; step++ {
 		for idTaxi, taxi := range model.Fleet {
-			for idRide, ride := range model.Rides {
-				prendLaCourse := TrajetPossibleJusque(step, taxi, ride)
-				if prendLaCourse >= 0 && taxi.Busy <= 0 {
-					heurePriseCourse := Distance(taxi.ColumnPos, taxi.RowPos, ride.BeginColumn, ride.BeginRow)
-					taxi.Busy = heurePriseCourse + Distance(ride.BeginColumn, ride.BeginRow, ride.EndColumn, ride.EndRow)
-					courses = AddRideToVehicule(courses, idRide, idTaxi)
+			if taxi.Busy <= 0 {
+				for idRide, ride := range model.Rides {
+					if !ride.Done {
+						prendLaCourse := TrajetPossibleJusque(step, taxi, ride)
+						if prendLaCourse >= 0 && taxi.Busy <= 0 {
+							heurePriseCourse := Distance(taxi.ColumnPos, taxi.RowPos, ride.BeginColumn, ride.BeginRow)
+							taxi.Busy = heurePriseCourse + Distance(ride.BeginColumn, ride.BeginRow, ride.EndColumn, ride.EndRow)
+							ride.Done = true
+							courses = AddRideToVehicule(courses, idRide, idTaxi)
+						}
+					}
 				}
+			} else {
+				taxi.Busy--
 			}
 		}
 	}

@@ -1,12 +1,12 @@
 package io
 
 import (
-	"github.com/Sfeir/google-hashcode-lille/src/model"
-	"strings"
-	logger "github.com/sirupsen/logrus"
-	"os"
 	"bufio"
 	"fmt"
+	"github.com/Sfeir/google-hashcode-lille/src/model"
+	logger "github.com/sirupsen/logrus"
+	"os"
+	"strings"
 )
 
 func Write(inputPath string, res []model.Course) {
