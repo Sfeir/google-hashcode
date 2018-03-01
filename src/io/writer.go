@@ -1,5 +1,5 @@
 package io
-
+/*
 import (
 	"bufio"
 	"fmt"
@@ -32,3 +32,4 @@ func Write(inputPath string, res []model.Slice) {
 		panic(err)
 	}
 }
+*/

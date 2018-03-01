@@ -7,7 +7,15 @@ import (
 	"github.com/urfave/cli"
 	"io/ioutil"
 	"os"
+	"github.com/Sfeir/google-hashcode-lille/src/algos"
 )
+
+//const testFile="a_example.in"
+//const testFile ="b_should_be_easy.in"
+//const testFile="c_no_hurry.in"
+//const testFile="d_metropolis.in"
+const testFile="e_high_bonus.in"
+
 
 func main() {
 
@@ -58,7 +66,7 @@ func main() {
 
 		for _, file := range files {
 			if file.Name() != ".DS_Store" {
-				if !isTest || file.Name() == "a_example.in" {
+				if !isTest || file.Name() == testFile {
 					runOn(inputDir + string(os.PathSeparator) + file.Name())
 				}
 			}
@@ -81,4 +89,10 @@ func runOn(path string) {
 	logger.Info("Nb rides : ", model.NbRides)
 	logger.Info("Bonus per Rides : ", model.BonusPerRide)
 	logger.Info("Total time : ", model.TotalTime)
+
+
+	res := algos.MockAlgo()
+	for i:=0; i < len(res); i++ {
+		// TODO output
+	}
 }
