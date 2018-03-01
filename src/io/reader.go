@@ -79,6 +79,7 @@ func GetInputs(path string) {
 			if nil != err {
 				logger.Error("Unable to parse latest finsh for ride ", i)
 			}
+			ride.Done = false
 			model.Rides = append(model.Rides, ride)
 		}
 		i++

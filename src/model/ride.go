@@ -11,6 +11,7 @@ type Ride struct {
 	EndColumn   int
 	EarlistStart int
 	LatestFinish int
+	Done bool
 }
 
 func (r *Ride) LogContent() {
