@@ -92,7 +92,5 @@ func runOn(path string) {
 
 
 	res := algos.MockAlgo()
-	for i:=0; i < len(res); i++ {
-		// TODO output
-	}
+	io.Write(path, res)
 }
