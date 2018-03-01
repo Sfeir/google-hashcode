@@ -11,9 +11,9 @@ import (
 	"github.com/urfave/cli"
 )
 
-const testFile = "a_example.in"
+//const testFile = "a_example.in"
 
-//const testFile ="b_should_be_easy.in"
+const testFile ="b_should_be_easy.in"
 //const testFile="c_no_hurry.in"
 //const testFile="d_metropolis.in"
 //const testFile="e_high_bonus.in"
