@@ -22,3 +22,13 @@ func TempsMaxAvantRetard(heureCourante int, ride *model.Ride) int {
 	distHorraire := ride.LatestFinish - (heureCourante + distRide)
 	return distHorraire
 }
+
+func AddRideToVehicule(c []model.Course, r int, v int) []model.Course {
+	if v <= len(c) {
+		c[v].Rides = append(c[v].Rides, r)
+		return c
+	} else {
+		course := model.Course{Vehicule:v, Rides:[]int{r}}
+		return append(c, course)
+	}
+}
