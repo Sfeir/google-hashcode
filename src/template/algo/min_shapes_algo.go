@@ -1,4 +1,4 @@
-package algos
+package algo
 
 import (
 	"github.com/Sfeir/google-hashcode-lille/src/model"

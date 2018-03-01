@@ -4,7 +4,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/Sfeir/google-hashcode-lille/src/algos"
+	"github.com/Sfeir/google-hashcode-lille/src/template"
 	"github.com/Sfeir/google-hashcode-lille/src/io"
 	"github.com/Sfeir/google-hashcode-lille/src/model"
 	logger "github.com/sirupsen/logrus"
@@ -85,7 +85,7 @@ func runOn(path string) {
 	var res []model.Slice
 	var localRes []model.Slice
 
-	localRes = algos.LineByLine(&data)
+	localRes = template.LineByLine(&data)
 	logger.Info("nb parts LineByLine algo : ", len(localRes))
 	res = append(res, localRes...)
 	logger.Info("nb parts total : ", len(res))
