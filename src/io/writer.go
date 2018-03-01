@@ -22,7 +22,7 @@ func Write(inputPath string, res []model.Course) {
 
 	w := bufio.NewWriter(file)
 	for i, c := range res {
-		fmt.Fprintf(w, "%d ", c.Vehicule)
+		fmt.Fprintf(w, "%d ", c.Vehicule+1)
 		for _, r := range c.Rides {
 			fmt.Fprintf(w, "%d ", r)
 		}

@@ -24,7 +24,7 @@ func TempsMaxAvantRetard(heureCourante int, ride *model.Ride) int {
 }
 
 func AddRideToVehicule(c []model.Course, r int, v int) []model.Course {
-	if v <= len(c) {
+	if v < len(c) {
 		c[v].Rides = append(c[v].Rides, r)
 		return c
 	} else {
