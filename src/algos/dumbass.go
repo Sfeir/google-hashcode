@@ -13,16 +13,17 @@ func Dumbass() []model.Course {
 		for idTaxi, taxi := range model.Fleet {
 			if taxi.Busy <= 0 {
 				for idRide, ride := range model.Rides {
-					if !ride.Done {
+					if !ride.Done && taxi.Busy <= 0 {
 						prendLaCourse := TrajetPossibleJusque(step, taxi, ride)
-						if prendLaCourse >= 0 && taxi.Busy <= 0 {
+						if prendLaCourse >= 0 {
 							heurePriseCourse := Distance(taxi.ColumnPos, taxi.RowPos, ride.BeginColumn, ride.BeginRow)
 							taxi.Busy = heurePriseCourse + Distance(ride.BeginColumn, ride.BeginRow, ride.EndColumn, ride.EndRow)
 							ride.Done = true
 							taxi.ColumnPos = ride.EndColumn
 							taxi.RowPos = ride.EndRow
-							logger.Info("Add ride ", idRide, " to taxi ", idTaxi)
+							logger.Info("Add ride ", idRide, " to taxi ", idTaxi, " will finish in ", taxi.Busy, "steps")
 							courses = AddRideToVehicule(courses, idRide, idTaxi)
+							break
 						}
 					}
 				}

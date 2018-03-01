@@ -17,7 +17,6 @@ func TrajetPossibleJusque(heureCourante int, taxi *model.Taxi, ride *model.Ride)
 	return distHorraire
 }
 
-
 func CalculatePointsOf(heureCourante int, taxi *model.Taxi, ride *model.Ride) int {
 	points := 0
 	distTaxiRide := Distance(taxi.ColumnPos, taxi.RowPos, ride.BeginColumn, ride.BeginRow)
@@ -29,7 +28,7 @@ func CalculatePointsOf(heureCourante int, taxi *model.Taxi, ride *model.Ride) in
 
 	timeToRide := ride.EarlistStart - heureCourante
 
-	points = distRide // Start with a points == distance
+	points = distRide                                                   // Start with a points == distance
 	points -= int(math.Max(float64(distTaxiRide), float64(timeToRide))) // Remove the distance to the ride
 	if timeToRide > distTaxiRide {
 		points += model.BonusPerRide
