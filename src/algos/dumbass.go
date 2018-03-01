@@ -19,6 +19,8 @@ func Dumbass() []model.Course {
 							heurePriseCourse := Distance(taxi.ColumnPos, taxi.RowPos, ride.BeginColumn, ride.BeginRow)
 							taxi.Busy = heurePriseCourse + Distance(ride.BeginColumn, ride.BeginRow, ride.EndColumn, ride.EndRow)
 							ride.Done = true
+							taxi.ColumnPos = ride.EndColumn
+							taxi.RowPos = ride.EndRow
 							logger.Info("Add ride ", idRide, " to taxi ", idTaxi)
 							courses = AddRideToVehicule(courses, idRide, idTaxi)
 						}
