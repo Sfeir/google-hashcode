@@ -8,3 +8,4 @@ var BonusPerRide int
 var TotalTime int
 
 var Rides []*Ride
+var Fleet []*Taxi
