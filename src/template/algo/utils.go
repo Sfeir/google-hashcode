@@ -18,6 +18,7 @@ func TrajetPossible(heureCourante int, taxi model.Taxi, ride model.Ride) bool {
 }
 
 func TempsMaxAvantRetard(heureCourante int, ride model.Ride) int {
-	//distRide := Distance(ride.BeginColumn, ride.BeginRow, ride.EndColumn, ride.EndRow)
-	return 0
+	distRide := Distance(ride.BeginColumn, ride.BeginRow, ride.EndColumn, ride.EndRow)
+	distHorraire := ride.LatestFinish - (heureCourante + distRide)
+	return distHorraire
 }
