@@ -10,11 +10,11 @@ func Distance(x1, y1, x2, y2 int) int {
 	return int(math.Abs(float64(x2-x1)) + math.Abs(float64(y2-y1)))
 }
 
-func TrajetPossible(heureCourante int, taxi *model.Taxi, ride *model.Ride) bool {
+func TrajetPossibleJusque(heureCourante int, taxi *model.Taxi, ride *model.Ride) int {
 	distTaxiRide := Distance(taxi.ColumnPos, taxi.RowPos, ride.BeginColumn, ride.BeginRow)
 	distRide := Distance(ride.BeginColumn, ride.BeginRow, ride.EndColumn, ride.EndRow)
 	distHorraire := ride.LatestFinish - (heureCourante + distRide + distTaxiRide)
-	return distHorraire >= 0
+	return distHorraire
 }
 
 func TempsMaxAvantRetard(heureCourante int, ride *model.Ride) int {
@@ -28,7 +28,20 @@ func AddRideToVehicule(c []model.Course, r int, v int) []model.Course {
 		c[v].Rides = append(c[v].Rides, r)
 		return c
 	} else {
-		course := model.Course{Vehicule:v, Rides:[]int{r}}
+		course := model.Course{Vehicule: v, Rides: []int{r}}
 		return append(c, course)
 	}
+}
+
+func TempsIndispoTaxi(heureCourante int, taxi *model.Taxi, ride *model.Ride) int {
+	distTaxiRide := Distance(taxi.ColumnPos, taxi.RowPos, ride.BeginColumn, ride.BeginRow)
+	distRide := Distance(ride.BeginColumn, ride.BeginRow, ride.EndColumn, ride.EndRow)
+
+	tempsTrajetAvant := distTaxiRide
+
+	if distTaxiRide+heureCourante < ride.EarlistStart {
+		tempsTrajetAvant = ride.EarlistStart - heureCourante
+	}
+
+	return tempsTrajetAvant + distRide
 }
