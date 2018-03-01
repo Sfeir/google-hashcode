@@ -90,12 +90,15 @@ func runOn(path string) {
 	logger.Info("Nb rides : ", model.NbRides)
 	logger.Info("Bonus per Rides : ", model.BonusPerRide)
 	logger.Info("Total time : ", model.TotalTime)
-	for i := 0; i < model.FleetSize; i++ {
+	model.Fleet = make([]*model.Taxi, model.FleetSize)
+	for i := 0; i < len(model.Fleet); i++ {
 		taxi := new(model.Taxi)
 		taxi.RowPos = 0
 		taxi.ColumnPos = 0
-		model.Fleet = append(model.Fleet, taxi)
+		model.Fleet[i] = taxi
 	}
+	logger.Info("Real fleet size ", len(model.Fleet))
+
 
 	res := algos.Dumbass()
 	io.Write(path, res)
