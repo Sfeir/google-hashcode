@@ -5,6 +5,7 @@ import (
 )
 
 type Ride struct {
+	Id int
 	BeginRow     int
 	BeginColumn  int
 	EndRow       int

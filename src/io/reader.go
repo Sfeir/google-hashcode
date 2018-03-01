@@ -55,6 +55,7 @@ func GetInputs(path string) {
 			}
 		} else {
 			ride := new(model.Ride)
+			ride.Id = i-1
 			ride.BeginRow, err = strconv.Atoi(parameters[0])
 			if nil != err {
 				logger.Error("Unable to parse begin row for ride ", i)

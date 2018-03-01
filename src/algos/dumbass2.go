@@ -12,27 +12,30 @@ func DumbassLessDumb() []model.Course {
 	for step := 0; step < model.TotalTime; step++ {
 		for idTaxi, taxi := range model.Fleet {
 			if taxi.Busy <= 0 {
-				heavierRide := model.Rides[0]
-				heavierRideId := 0
+				heavierRide := new(model.Ride)
 				heavierPoints := 0
-				for idRide, ride := range model.Rides {
-					if !ride.Done {
-						points := CalculatePointsOf(step, taxi, ride)
-						if points > heavierPoints {
+				setted := false
+				hasAvailable := false
+				posRide := 0
+				for i, ride := range model.Rides {
+						points, available := CalculatePointsOf(step, taxi, ride)
+				//		logger.Info("Ride ", ride.Id, " has ", points, "pts")
+						if !setted || (points > heavierPoints && available) {
 							heavierPoints = points
 							heavierRide = ride
-							heavierRideId = idRide
+							posRide = i
+							setted = true
+							hasAvailable = available ||hasAvailable
 						}
-					}
 				}
-				if heavierPoints > 0 {
+				if hasAvailable  {
 					heurePriseCourse := Distance(taxi.ColumnPos, taxi.RowPos, heavierRide.BeginColumn, heavierRide.BeginRow)
 					taxi.Busy = heurePriseCourse + Distance(heavierRide.BeginColumn, heavierRide.BeginRow, heavierRide.EndColumn, heavierRide.EndRow)
-					heavierRide.Done = true
 					taxi.ColumnPos = heavierRide.EndColumn
 					taxi.RowPos = heavierRide.EndRow
-					logger.Info("Add ride ", heavierRideId, " to taxi ", idTaxi)
-					courses = AddRideToVehicule(courses, heavierRideId, idTaxi)
+					logger.Info("Add ride ", heavierRide.Id, " to taxi ", idTaxi)
+					courses = AddRideToVehicule(courses, heavierRide.Id, idTaxi)
+					model.Rides = append(model.Rides[:posRide], model.Rides[posRide+1:]...)
 				}
 			} else {
 				taxi.Busy--
