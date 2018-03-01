@@ -1,5 +1,5 @@
 package algo
-
+/*
 import (
 	"github.com/Sfeir/google-hashcode-lille/src/model"
 	logger "github.com/sirupsen/logrus"
@@ -64,3 +64,4 @@ func LineByLine(inputs *model.Inputs) []model.Slice {
 
 	return slices
 }
+*/

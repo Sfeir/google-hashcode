@@ -1,5 +1,5 @@
 package algo
-
+/*
 import (
 	"github.com/Sfeir/google-hashcode-lille/src/model"
 	logger "github.com/sirupsen/logrus"
@@ -77,3 +77,4 @@ func MinShapesAlgo(inputs *model.Inputs) []model.Slice {
 	}
 	return result
 }
+*/

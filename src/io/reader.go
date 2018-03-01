@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func GetInputs(path string) model.Inputs {
+func GetInputs(path string) {
 	file, err := os.Open(path)
 	if err != nil {
 		logger.Fatal(err)
@@ -18,46 +18,69 @@ func GetInputs(path string) model.Inputs {
 
 	scanner := bufio.NewScanner(file)
 	i := 0
-	var datas model.Inputs
 
+	model.Rides = []*model.Ride{}
 	for scanner.Scan() { //chaque ligne
 		ligne := scanner.Text()
+		parameters := strings.Split(ligne, " ")
 		if i == 0 {
 			logger.Info(ligne)
-			parameters := strings.Split(ligne, " ")
-			if len(parameters) != 4 {
-				logger.Fatalf("Have %d parameters instead of 4 : for line %d", len(parameters), i)
+			if 6 != len(parameters) {
+				logger.Error("First line has ", len(parameters), " instead of 6.")
 			}
 
-			datas.NbRows, err = strconv.Atoi(parameters[0])
-			if err != nil {
-				logger.Fatalf("Cannot parse nbRows %v", parameters[0])
+			model.GridRows, err = strconv.Atoi(parameters[0])
+			if nil != err {
+				logger.Error("Unable to parse grid rows", err)
 			}
-			datas.NbColumns, err = strconv.Atoi(parameters[1])
-			if err != nil {
-				logger.Fatalf("Cannot parse nbColumns %v", parameters[1])
+			model.GridColumns, err = strconv.Atoi(parameters[1])
+			if nil != err {
+				logger.Error("Unable to parse grid columns", err)
 			}
-			datas.MinNumberOfIngredient, err = strconv.Atoi(parameters[2])
-			if err != nil {
-				logger.Fatalf("Cannot parse minNumberOfIngredient %v", parameters[2])
+			model.FleetSize, err = strconv.Atoi(parameters[2])
+			if nil != err {
+				logger.Error("Unable to parse fleet size", err)
 			}
-			datas.MaxSizeSlice, err = strconv.Atoi(parameters[3])
-			if err != nil {
-				logger.Fatalf("Cannot parse maxSizeSlice %v", parameters[3])
+			model.NbRides, err = strconv.Atoi(parameters[3])
+			if nil != err {
+				logger.Error("Unable to parse number of rides", err)
 			}
-
-			datas.Cells = make([][]model.Cell, datas.NbRows)
-			for y := 0; y < datas.NbRows; y++ {
-				datas.Cells[y] = make([]model.Cell, datas.NbColumns)
+			model.BonusPerRide, err = strconv.Atoi(parameters[4])
+			if nil != err {
+				logger.Error("Unable to parse bonus per ride", err)
+			}
+			model.TotalTime, err = strconv.Atoi(parameters[5])
+			if nil != err {
+				logger.Error("Unable to parse nb of steps", err)
 			}
 		} else {
-			for nb, c := range ligne {
-				datas.Cells[i-1][nb].Tomato = (c == 'T')
-				datas.Cells[i-1][nb].Taken = false
+			ride := new(model.Ride)
+			ride.BeginRow, err = strconv.Atoi(parameters[0])
+			if nil != err {
+				logger.Error("Unable to parse begin row for ride ", i)
 			}
+			ride.BeginColumn, err = strconv.Atoi(parameters[1])
+			if nil != err {
+				logger.Error("Unable to parse begin column for ride ", i)
+			}
+			ride.EndRow, err = strconv.Atoi(parameters[2])
+			if nil != err {
+				logger.Error("Unable to parse end row for ride ", i)
+			}
+			ride.EndColumn, err = strconv.Atoi(parameters[3])
+			if nil != err {
+				logger.Error("Unable to parse end column for ride ", i)
+			}
+			ride.EarlistStart, err = strconv.Atoi(parameters[4])
+			if nil != err {
+				logger.Error("Unable to parse earliest for ride ", i)
+			}
+			ride.LatestFinish, err = strconv.Atoi(parameters[5])
+			if nil != err {
+				logger.Error("Unable to parse latest finsh for ride ", i)
+			}
+			model.Rides = append(model.Rides, ride)
 		}
 		i++
 	}
-
-	return datas
 }

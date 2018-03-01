@@ -1,14 +1,12 @@
 package main
 
 import (
-	"io/ioutil"
-	"os"
-
-	"github.com/Sfeir/google-hashcode-lille/src/template/algo"
 	"github.com/Sfeir/google-hashcode-lille/src/io"
 	"github.com/Sfeir/google-hashcode-lille/src/model"
 	logger "github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
+	"io/ioutil"
+	"os"
 )
 
 func main() {
@@ -60,7 +58,7 @@ func main() {
 
 		for _, file := range files {
 			if file.Name() != ".DS_Store" {
-				if !isTest || file.Name() == "small.in" {
+				if !isTest || file.Name() == "a_example.in" {
 					runOn(inputDir + string(os.PathSeparator) + file.Name())
 				}
 			}
@@ -76,25 +74,11 @@ func main() {
 
 func runOn(path string) {
 	logger.Info("starting process for: ", path)
-	data := io.GetInputs(path)
-	logger.Info("NbRow : ", data.NbRows)
-	logger.Info("NbColumns : ", data.NbColumns)
-	logger.Info("MinNumberOfIngredient : ", data.MinNumberOfIngredient)
-	logger.Info("MaxSizeSlice : ", data.MaxSizeSlice)
-
-	var res []model.Slice
-	var localRes []model.Slice
-
-	localRes = algo.LineByLine(&data)
-	logger.Info("nb parts LineByLine algo : ", len(localRes))
-	res = append(res, localRes...)
-	logger.Info("nb parts total : ", len(res))
-
-	/*localRes = algos.MinShapesAlgo(&data)
-	logger.Info("nb parts MinShapesAlgo : ", len(localRes))
-	res = append(res, localRes...)
-	logger.Info("nb parts total : ", len(res)) */
-
-	io.Write(path, res)
-
+	io.GetInputs(path)
+	logger.Info("Grid Rows : ", model.GridRows)
+	logger.Info("Grid Columns : ", model.GridColumns)
+	logger.Info("Fleet size : ", model.FleetSize)
+	logger.Info("Nb rides : ", model.NbRides)
+	logger.Info("Bonus per Rides : ", model.BonusPerRide)
+	logger.Info("Total time : ", model.TotalTime)
 }

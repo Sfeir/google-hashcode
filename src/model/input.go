@@ -1,9 +1,10 @@
 package model
 
-type Inputs struct {
-	NbColumns             int
-	NbRows                int
-	MinNumberOfIngredient int
-	MaxSizeSlice          int
-	Cells                 [][]Cell
-}
+var GridColumns int
+var GridRows int
+var FleetSize int
+var NbRides int
+var BonusPerRide int
+var TotalTime int
+
+var Rides []*Ride
