@@ -2,3 +2,7 @@
 /.idea/
 /target/
 /hashcode.iml
+*.classpath
+*.settings
+*.project
+*/target/*
