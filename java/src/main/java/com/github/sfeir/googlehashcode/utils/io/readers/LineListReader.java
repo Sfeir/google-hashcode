@@ -16,7 +16,7 @@ public class LineListReader implements Reader<List<String>> {
 	private Charset charset = null;
 	
 	/**
-	 * Create a new LineListReader setted.
+	 * Create a new LineListReader set.
 	 * 
 	 * This method will assume that the files are using UTF-8 charset.
 	 */
@@ -27,7 +27,7 @@ public class LineListReader implements Reader<List<String>> {
 	/**
 	 * Create a new LineListReader setted to read the given charset.
 	 * 
-	 * @param charset the charset to use while reading the file.
+	 * @param cs the charset to use while reading the file.
 	 */
 	public LineListReader(Charset cs) {
 		this.charset = cs;

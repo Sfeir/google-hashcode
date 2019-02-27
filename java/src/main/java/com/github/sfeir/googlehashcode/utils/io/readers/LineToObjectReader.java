@@ -13,7 +13,7 @@ import com.github.sfeir.googlehashcode.utils.Mapper;
 /**
  * A String reader which will only return the content of the file as a list of mapped object.
  * 
- * This class can be very usefull for CSV files.
+ * This class can be very useful for CSV files.
  * 
  * @author Sfeir
  */
@@ -22,7 +22,7 @@ public class LineToObjectReader<T> implements Reader<List<T>> {
 	private final Charset charset;
 	
 	/**
-	 * Create a new LineToObjectReader setted to use the given mapper.
+	 * Create a new LineToObjectReader set to use the given mapper.
 	 * 
 	 * This method will assume that the files are using UTF-8 charset.
 	 * 
@@ -33,7 +33,7 @@ public class LineToObjectReader<T> implements Reader<List<T>> {
 	}
 	
 	/**
-	 * Create a new LineToObjectReader setted to use the given mapper and read the given charset.
+	 * Create a new LineToObjectReader set to use the given mapper and read the given charset.
 	 * 
 	 * @param mpr the Mapper to use to transform each line into an object.
 	 * @param cs the Charset to use while reading files.

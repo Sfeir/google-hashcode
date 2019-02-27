@@ -12,7 +12,8 @@ public interface Reader<T> {
 	 * Read the given file and return it as a <pre>T</pre> object.
 	 * 
 	 * Note: File should be on the local filesystem.
-	 * 
+	 *
+	 * @param file the path of the file to be read.
 	 * @return the Java object representing the file's content.
 	 * @throws IOException if an error occurs while reading the file.
 	 */
