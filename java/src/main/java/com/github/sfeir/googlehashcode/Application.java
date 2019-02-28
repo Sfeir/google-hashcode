@@ -35,7 +35,7 @@ public class Application {
         Queue<Job> inputJobs = JobsBuilder.build(slides);
         List<Job> outputJobs = new ArrayList();
 
-        ExecutorService executor = Executors.newFixedThreadPool(10);
+        ExecutorService executor = Executors.newFixedThreadPool(50);
 
         while (!inputJobs.isEmpty()) {
             Job job = inputJobs.poll();
@@ -66,6 +66,9 @@ public class Application {
 
         Writer<List<Slide>> slideWriter = new ObjectListToFile<>();
         slideWriter.write("output-" + new File(fileName).getName(), best.getSlides());
+
+        // TODO grosses vm prete a lancer le programme
+        // avoir le multi threading prêt à tourner
 
     }
 }
