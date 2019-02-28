@@ -1,7 +1,7 @@
 
 .idea/
 /target/
-/hashcode.iml
+*/google-hashcode.iml
 *.classpath
 *.settings
 *.project
