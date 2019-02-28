@@ -15,7 +15,7 @@ public class JobsBuilder {
 
         for (int i = 1; i < slides.size(); i++) {
             List<Slide> list = slides.subList(i, slides.size());
-            list.addAll(slides.subList(0, i));
+            list.addAll(slides.subList(0, i-1));
             queue.add(new Job(list));
         }
 
