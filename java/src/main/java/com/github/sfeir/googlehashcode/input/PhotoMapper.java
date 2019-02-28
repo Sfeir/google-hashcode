@@ -10,7 +10,7 @@ public class PhotoMapper implements Mapper<Photo> {
 		if (values.length < 3) {
 			return result;
 		}
-		result.id = i;
+		result.id = i-1;
 		result.orientation = Orientation.fromString(values[0]);
 		for (int j=2; j < values.length; j++) {
 			result.tags.add(values[j]);
