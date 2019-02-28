@@ -1,5 +1,6 @@
 package com.github.sfeir.googlehashcode;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class Application {
 		// TODO Use Slides !!
 		
 		Writer<List<Slide>> slideWriter = new ObjectListToFile<>();
-		slideWriter.write("output-"+fileName, slides);
+		slideWriter.write("output-" + new File(fileName).getName(), slides);
 
 	}
 }
