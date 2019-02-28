@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class Scorer {
 
-    public static int score(Slide slide1, Slide slide2) {
+    public static int score(final Slide slide1, final Slide slide2) {
 
         Set<String> tags1 = slide1.getTags();
         Set<String> tags2 = slide2.getTags();
