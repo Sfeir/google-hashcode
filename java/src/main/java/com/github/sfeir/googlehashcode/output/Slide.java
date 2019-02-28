@@ -38,11 +38,11 @@ public class Slide {
 
     @Override
     public boolean equals(Object o) {
-        return photo1.id == ((Slide)o).photo1.id;
+        return photo1.id == ((Slide)o).photo1.id && photo2.id == ((Slide)o).photo2.id;
     }
 
     @Override
     public int hashCode() {
-        return photo1.id;
+        return photo1.id + 1000 * photo2.id;
     }
 }
