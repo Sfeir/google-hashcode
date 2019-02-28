@@ -27,4 +27,12 @@ public class Slide {
         return tags;
     }
 
+    public String toString() {
+        String output = String.valueOf(photo1.id);
+        if (photo2 != null) {
+            output += " " + photo2.id;
+        }
+        return output;
+    }
+
 }

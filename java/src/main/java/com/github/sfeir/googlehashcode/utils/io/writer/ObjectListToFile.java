@@ -6,6 +6,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,7 +43,9 @@ public class ObjectListToFile<T> implements Writer<List<T>> {
 	@Override
 	public void write(String file, List<T> objects) throws IOException {
 		Path filepath = new File(file).toPath();
-		List<String> collect = objects.stream().map(Object::toString).collect(Collectors.toList());
-		Files.write(filepath, collect, this.charset, StandardOpenOption.CREATE);
+		List<String> collection = new ArrayList<>();
+		collection.add(String.valueOf(objects.size()));
+		collection.addAll(objects.stream().map(Object::toString).collect(Collectors.toList()));
+		Files.write(filepath, collection, this.charset, StandardOpenOption.CREATE);
 	}
 }

@@ -1,12 +1,16 @@
 package com.github.sfeir.googlehashcode;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.github.sfeir.googlehashcode.input.Photo;
 import com.github.sfeir.googlehashcode.input.PhotoMapper;
+import com.github.sfeir.googlehashcode.output.Slide;
 import com.github.sfeir.googlehashcode.utils.io.readers.LineToObjectReader;
 import com.github.sfeir.googlehashcode.utils.io.readers.Reader;
+import com.github.sfeir.googlehashcode.utils.io.writer.ObjectListToFile;
+import com.github.sfeir.googlehashcode.utils.io.writer.Writer;
 
 public class Application {
 	public static void main(String[] args) throws IOException {
@@ -20,5 +24,11 @@ public class Application {
 		
 
 		// TODO Use photos !!
+
+		List<Slide> slides = new ArrayList<>();
+
+		Writer<List<Slide>> slideWriter = new ObjectListToFile<>();
+		slideWriter.write("output-"+fileName, slides);
+
 	}
 }
