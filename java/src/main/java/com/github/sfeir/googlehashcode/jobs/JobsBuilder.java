@@ -11,12 +11,8 @@ public class JobsBuilder {
 
         Queue<Job> queue = new ArrayDeque<>();
 
-        queue.add(new Job(new ArrayList<>(slides)));
-
-        for (int i = 1; i < slides.size(); i++) {
-            List<Slide> list = slides.subList(i, slides.size());
-            list.addAll(slides.subList(0, i-1));
-            queue.add(new Job(list));
+        for (int i = 0; i < slides.size(); i++) {
+            queue.add(new Job(slides, i));
         }
 
         return queue;
