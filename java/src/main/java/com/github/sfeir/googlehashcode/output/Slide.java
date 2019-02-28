@@ -10,8 +10,21 @@ public class Slide {
     private Photo photo1;
     private Photo photo2;
 
+    public Slide(Photo photo1) {
+        this.photo1 = photo1;
+    }
+
+    public Slide(Photo photo1, Photo photo2) {
+        this.photo1 = photo1;
+        this.photo2 = photo2;
+    }
+
     public Set<String> getTags() {
-        return new HashSet<>();
+        HashSet<String> tags = new HashSet<>(photo1.tags);
+        if (photo2 != null) {
+            tags.addAll(photo2.tags);
+        }
+        return tags;
     }
 
 }
