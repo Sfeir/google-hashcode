@@ -1,12 +1,12 @@
 package com.github.sfeir.googlehashcode;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.github.sfeir.googlehashcode.input.Photo;
 import com.github.sfeir.googlehashcode.input.PhotoMapper;
 import com.github.sfeir.googlehashcode.output.Slide;
+import com.github.sfeir.googlehashcode.photosslides.PhotosToSlideFactory;
 import com.github.sfeir.googlehashcode.utils.io.readers.LineToObjectReader;
 import com.github.sfeir.googlehashcode.utils.io.readers.Reader;
 import com.github.sfeir.googlehashcode.utils.io.writer.ObjectListToFile;
@@ -22,10 +22,9 @@ public class Application {
 		String fileName = Application.class.getClassLoader().getResource(args[0]).getFile();
 		List<Photo> photos = photoReader.read(fileName);
 		
-
+		
 		// TODO Use photos !!
-
-		List<Slide> slides = new ArrayList<>();
+		List<Slide> slides = PhotosToSlideFactory.getPhotoToSlides().transform(photos);
 
 		Writer<List<Slide>> slideWriter = new ObjectListToFile<>();
 		slideWriter.write("output-"+fileName, slides);
