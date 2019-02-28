@@ -3,6 +3,7 @@ package com.github.sfeir.googlehashcode.output;
 import com.github.sfeir.googlehashcode.input.Photo;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Slide {
@@ -35,4 +36,13 @@ public class Slide {
         return output;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return photo1.id == ((Slide)o).photo1.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return photo1.id;
+    }
 }
