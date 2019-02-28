@@ -8,10 +8,19 @@ import java.util.concurrent.Callable;
 public class Job implements Callable<Integer> {
 
     private List<Slide> slides;
+    private Integer score = 0;
 
 
     public Job(List<Slide> slides) {
         this.slides = slides;
+    }
+
+    public List<Slide> getSlides() {
+        return slides;
+    }
+
+    public Integer getScore() {
+        return score;
     }
 
     @Override
