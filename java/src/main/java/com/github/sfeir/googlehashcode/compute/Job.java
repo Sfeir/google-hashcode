@@ -41,7 +41,7 @@ public class Job implements Runnable {
         Slide selectedSlide = slides.get(0);
         score = 0;
 
-        while (slides.size() > 0) {
+        while (slides.size() > 1) {
             slides.remove(selectedSlide);
             final Slide current = selectedSlide;
             ScoredImage scoredImage = slides.stream()
