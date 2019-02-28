@@ -22,10 +22,9 @@ public class Application {
 		String fileName = Application.class.getClassLoader().getResource(args[0]).getFile();
 		List<Photo> photos = photoReader.read(fileName);
 		
-		
-		// TODO Use photos !!
 		List<Slide> slides = PhotosToSlideFactory.getPhotoToSlides().transform(photos);
-
+		// TODO Use Slides !!
+		
 		Writer<List<Slide>> slideWriter = new ObjectListToFile<>();
 		slideWriter.write("output-"+fileName, slides);
 
