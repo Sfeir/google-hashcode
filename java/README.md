@@ -1,11 +1,11 @@
-# [REPLACE-ALL-YOURTEAMNAME] Google Hashcode [REPLACE-ALL-HASHCODEYEAR]
+# SFEIRLille Google Hashcode 2019
 
-This project contains the submission of [REPLACE-ALL-YOURTEAMNAME] for the Google Hashcode 
-of [REPLACE-ALL-HASHCODEYEAR].
+This project contains the submission of SFEIRLille for the Google Hashcode 
+of 2019.
 
 ## How to Run it
 
-If you don't hhave the Executable Jar [REPLACE-ALL-YOURTEAMNAME]-hashcode-[REPLACE-ALL-HASHCODEYEAR].jar, you can 
+If you don't hhave the Executable Jar SFEIRLille-hashcode-2019.jar, you can 
 manually build it following the steps bellow (see How to Build it).
 
 You'll need a Java Runtime Environment in version 11 to be able to run this (which can be 
@@ -14,7 +14,7 @@ found [here](https://adoptopenjdk.net/?variant=openjdk11&jvmVariant=hotspot) ).
 Once you have the JAR, you can launch the JAR with the command : 
 
 ```
-> java -jar [REPLACE-ALL-YOURTEAMNAME]-hashcode-[REPLACE-ALL-HASHCODEYEAR].jar
+> java -jar SFEIRLille-hashcode-2019.jar
 ```
 
 ## How to Build it

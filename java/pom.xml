@@ -10,8 +10,8 @@
 	<packaging>jar</packaging>
 
 	<properties>
-		<team.name>TO_BE_REPLACED_TEAMNAME</team.name>
-		<hashcode.year>TO_BE_REPLACED_HASHCODEYEAR</hashcode.year>
+		<team.name>SFEIRLille</team.name>
+		<hashcode.year>2019</hashcode.year>
 	</properties>
 
 	<build>
