@@ -37,7 +37,7 @@ public class Job implements Runnable {
 
         @Override
         public int compareTo(ScoredImage o) {
-            return score - o.score;
+            return o.score - score;
         }
     }
 
