@@ -7,7 +7,7 @@ import java.util.*;
 
 public class JobsBuilder {
 
-    public Queue<Job> build(List<Slide> slides) {
+    public static Queue<Job> build(List<Slide> slides) {
 
         Queue<Job> queue = new ArrayDeque<>();
 

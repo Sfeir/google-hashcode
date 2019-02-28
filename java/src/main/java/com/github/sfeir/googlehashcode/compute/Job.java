@@ -3,9 +3,8 @@ package com.github.sfeir.googlehashcode.compute;
 import com.github.sfeir.googlehashcode.output.Slide;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
-public class Job implements Callable<Integer> {
+public class Job implements Runnable {
 
     private List<Slide> slides;
     private Integer score = 0;
@@ -24,8 +23,7 @@ public class Job implements Callable<Integer> {
     }
 
     @Override
-    public Integer call() throws Exception {
-        return 0;
-    }
+    public void run() {
 
+    }
 }
