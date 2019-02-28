@@ -8,5 +8,6 @@ import java.util.function.Function;
  * @author Sfeir
  * @param <T> The targeted Object.
  */
-public interface Mapper<T> extends Function<String, T> {
+public interface Mapper<T> {
+	T map(int i, String line);
 }

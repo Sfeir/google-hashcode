@@ -47,9 +47,11 @@ public class LineToObjectStreamer<T> extends Streamer<T> {
 		try {
 			is = new FileInputStream(path);
 			sc = new Scanner(is, this.charset);
+			int lineNumber = 0;
 			while (sc.hasNextLine()) {
+				lineNumber++;
 				String line = sc.nextLine();
-				T objLine = this.mapper.apply(line);
+				T objLine = this.mapper.map(lineNumber, line);
 				this.behavior.apply(objLine);
 			}
 		} finally {

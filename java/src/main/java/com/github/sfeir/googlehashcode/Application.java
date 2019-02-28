@@ -17,7 +17,6 @@ public class Application {
 		
 		String fileName = Application.class.getClassLoader().getResource(args[0]).getFile();
 		List<Photo> photos = photoReader.read(fileName);
-		photos.remove(0); // Remove the number of line (ugly but do the job).
 		
 
 		// TODO Use photos !!

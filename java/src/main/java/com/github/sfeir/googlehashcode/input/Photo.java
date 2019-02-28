@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Photo {
+	public int id;
 	public Orientation orientation;
 	public Set<String> tags;
 	
@@ -14,7 +15,7 @@ public class Photo {
 	
 	@Override
 	public String toString() {
-		StringBuilder result = new StringBuilder("Photo : (Orientation " + this.orientation.name() + " tags : <");
+		StringBuilder result = new StringBuilder("Photo " + String.valueOf(this.id) + " : (Orientation " + this.orientation.name() + " tags : <");
 		for (String t : tags) {
 			result.append(t).append(" ");
 		}

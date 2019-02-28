@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,9 +48,11 @@ public class LineToObjectReader<T> implements Reader<List<T>> {
 	@Override
 	public List<T> read(String file) throws IOException {
 		Path filepath = new File(file).toPath();
-		return Files.readAllLines(filepath, this.charset)
-			.stream()
-			.map(this.mapper)
-			.collect(Collectors.toList());
+		List<String> lines =  Files.readAllLines(filepath, this.charset);
+		List<T> result = new ArrayList<>();
+		for (int i = 1; i < lines.size(); i++) {
+			result.add(this.mapper.map(i, lines.get(i)));
+		}
+		return result;
 	}
 }

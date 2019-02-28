@@ -131,7 +131,7 @@ class BenchmarkStreamerVSReader {
 	private static class MapperOfObject implements Mapper<MappedObject> {
 		private int lineSeen = 0;
 		@Override
-		public MappedObject apply(String t) {
+		public MappedObject map(int lineNumber, String t) {
 			int tCounter = 0;
 			int mCounter = 0;
 			this.lineSeen++;

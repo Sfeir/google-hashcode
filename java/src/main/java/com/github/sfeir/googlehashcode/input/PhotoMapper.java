@@ -4,16 +4,16 @@ import com.github.sfeir.googlehashcode.utils.Mapper;
 
 public class PhotoMapper implements Mapper<Photo> {
 	@Override
-	public Photo apply(String t) {
-		String[] values = t.split(" ");
+	public Photo map(int i, String line) {
+		String[] values = line.split(" ");
 		Photo result = new Photo();
 		if (values.length < 3) {
 			return result;
 		}
-		
+		result.id = i;
 		result.orientation = Orientation.fromString(values[0]);
-		for (int i=2; i < values.length; i++) {
-			result.tags.add(values[i]);
+		for (int j=2; j < values.length; j++) {
+			result.tags.add(values[j]);
 		}
 		return result;
 	}
