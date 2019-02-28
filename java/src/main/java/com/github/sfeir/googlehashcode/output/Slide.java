@@ -8,8 +8,8 @@ import java.util.Set;
 
 public class Slide {
 
-    private Photo photo1;
-    private Photo photo2;
+    public Photo photo1;
+    public Photo photo2;
 
     public Slide(Photo photo1) {
         this.photo1 = photo1;
