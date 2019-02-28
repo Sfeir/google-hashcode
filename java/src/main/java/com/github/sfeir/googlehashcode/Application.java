@@ -13,6 +13,7 @@ import com.github.sfeir.googlehashcode.utils.io.writer.Writer;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ExecutorService;
@@ -31,13 +32,15 @@ public class Application {
         List<Slide> slides = PhotosToSlideFactory.getPhotoToSlides().transform(photos);
         // TODO Use Slides !!
 
-        Queue<Job> jobs = JobsBuilder.build(slides);
+        Queue<Job> inputJobs = JobsBuilder.build(slides);
+        List<Job> outputJobs = new ArrayList();
 
         ExecutorService executor = Executors.newFixedThreadPool(10);
 
-        while (!jobs.isEmpty()) {
-            Job job = jobs.peek();
+        while (!inputJobs.isEmpty()) {
+            Job job = inputJobs.poll();
             executor.execute(job);
+            outputJobs.add(job);
         }
 
         executor.shutdown();
@@ -51,11 +54,18 @@ public class Application {
 
         // iterate on the jobs
         // get the better score
+        Job best = null;
+        Integer score = 0;
+        for (Job job : outputJobs) {
+            if (job.getScore() > score) {
+                best = job;
+                score = job.getScore();
+            }
+        }
         // write the best solution
 
         Writer<List<Slide>> slideWriter = new ObjectListToFile<>();
-        slideWriter.write("output-" + new File(fileName).getName(), slides);
-
+        slideWriter.write("output-" + new File(fileName).getName(), best.getSlides());
 
     }
 }
